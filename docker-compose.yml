@@ -13,22 +13,22 @@ services:
             MYSQL_DATABASE: restobar
             MYSQL_USER: mysql
             MYSQL_PASSWORD: secret
-    nginx:
+    admin_nginx:
         restart: always
         depends_on:
-            - backend
-            - frontend
+            - admin_backend
+            - admin_frontend
         build:
             dockerfile: Dockerfile.dev
-            context: ./nginx
+            context: ./apps/admin/nginx
         ports:
             - "3000:80"
-    backend:
+    admin_backend:
         depends_on:
             - mysql
         build:
             dockerfile: Dockerfile.dev
-            context: backend
+            context: ./apps/admin/backend
         volumes:
             - /app/node_modules
             - ./backend:/app
@@ -44,11 +44,11 @@ services:
             - NODE_ENV=development
             - PORT=5000
             - JWT_SECRET=abc123
-    frontend:
+    admin_frontend:
         stdin_open: true
         build:
             dockerfile: Dockerfile.dev
-            context: ./frontend
+            context: ./apps/admin/frontend
         volumes:
             - /app/node_modules
             - ./frontend:/app

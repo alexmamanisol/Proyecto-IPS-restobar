@@ -1,0 +1,19 @@
+MPLEMENTACIONES HECHAS:
+
+* 1. .env mal ubicado: dotenv.config() buscaba .env en apps/admin-backend/ (donde turbo ejecuta el script), pero el archivo estaba en la raíz del proyecto. Agregué path.resolve(__dirname, ...) en server.js y config/database.js para que apunten al .env correcto.
+
+* 2. Instalador del sequelizer para admitir postgreSQL con Supabase 
+
+* 3. He subdividido el proyecto para que construyamos front y back en
+  la carpeta ./apps y cualquier utilidad para reusar codigo en ./packages
+
+* He implementado Turborepo para gestionar multiples mini-proyectos.
+
+PROBLEMAS:
+
+* El front falta arrancar con Turborepo, además que al inicializarlo con
+  pnpm start dá error.
+
+SUGERENCIAS:
+
+Inserten sus variables de entorno en el derectorio ROOT de nuestro proyecto, osea en ./IPS-restobar
