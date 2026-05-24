@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const path = require("path");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 const app = express();
 
 if (process.env.NODE_ENV === "development") {

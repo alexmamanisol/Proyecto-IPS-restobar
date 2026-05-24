@@ -2,19 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 /* Components */
-import Message from "../../components/Message";
-import Loader from "../../components/Loader";
 import HeaderContent from "../../components/HeaderContent";
-import ButtonGoBack from "../../components/ButtonGoBack";
-
-/* Form components */
-import Textarea from "../../components/form/Textarea";
-import Checkbox from "../../components/form/Checkbox";
+import { Message, Loader, ButtonGoBack, Textarea, Checkbox, Select } from "@restobar/ui";
 
 /* Order components */
 import ProductsTable from "../../components/order/ProductsTable";
 import OrderInfo from "../../components/order/OrderInfo";
-import Select from "../../components/Select";
 import OrderCart from "../../components/order/OrderCart";
 import LoaderHandler from "../../components/loader/LoaderHandler";
 

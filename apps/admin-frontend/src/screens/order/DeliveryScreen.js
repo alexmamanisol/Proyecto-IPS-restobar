@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 /* components */
 import HeaderContent from "../../components/HeaderContent";
+import { Pagination } from "@restobar/ui";
 import DataTableLoader from "../../components/loader/DataTableLoader";
 import LoaderHandler from "../../components/loader/LoaderHandler";
-import Pagination from "../../components/Pagination";
 import Search from "../../components/Search";
 
 /* actions */

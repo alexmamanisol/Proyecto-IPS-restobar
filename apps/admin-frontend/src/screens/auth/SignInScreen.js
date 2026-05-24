@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./SignInScreen.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/userActions";
-import Message from "../../components/Message";
-import Loader from "../../components/Loader";
+import { Message, Loader } from "@restobar/ui";
 
 const SignInScreen = ({ history }) => {
     const [email, setEmail] = useState("");

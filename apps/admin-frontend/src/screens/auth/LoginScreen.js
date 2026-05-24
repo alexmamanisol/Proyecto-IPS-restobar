@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/userActions";
-import Loader from "../../components/Loader";
-import Message from "../../components/Message";
+import { Loader, Message, Logo } from "@restobar/ui";
 
 const LoginScreen = ({ history }) => {
     const [email, setEmail] = useState("");
@@ -38,9 +37,8 @@ const LoginScreen = ({ history }) => {
                         <div className="login-logo">
                             <b>Restobar</b>
                             <div className="text-center">
-                                <img
+                                <Logo
                                     className="profile-user-img img-fluid img-circle"
-                                    src={"/logo.png"}
                                     alt="User profile picture"
                                 />
                             </div>

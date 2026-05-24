@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 /* Components */
 import HeaderContent from "../../components/HeaderContent";
+import { Pagination } from "@restobar/ui";
 import DataTableLoader from "../../components/loader/DataTableLoader";
 import Search from "../../components/Search";
 import LoaderHandler from "../../components/loader/LoaderHandler";
-import Pagination from "../../components/Pagination";
 
 /* Actions */
 import { listOrders } from "../../actions/orderActions";

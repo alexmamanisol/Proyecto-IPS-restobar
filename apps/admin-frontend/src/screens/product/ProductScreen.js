@@ -4,11 +4,9 @@ import { Link } from "react-router-dom";
 
 /* Components */
 import HeaderContent from "../../components/HeaderContent";
+import { Input, ModalButton, Select, Pagination, Message } from "@restobar/ui";
 import Modal from "react-modal";
-import Input from "../../components/form/Input";
-import ModalButton from "../../components/ModalButton";
 import DataTableLoader from "../../components/loader/DataTableLoader";
-import Select from "../../components/Select";
 
 /* Actions */
 import { listProducts, createProduct } from "../../actions/productActions";
@@ -18,8 +16,6 @@ import { listCategories } from "../../actions/categoryActions";
 import { modalStyles } from "../../utils/styles";
 import Search from "../../components/Search";
 import LoaderHandler from "../../components/loader/LoaderHandler";
-import Pagination from "../../components/Pagination";
-import Message from "../../components/Message";
 
 Modal.setAppElement("#root");
 

@@ -2,11 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 /* Components */
-import Message from "../../components/Message";
-import Loader from "../../components/Loader";
+import { Message, Loader, Input, ButtonGoBack } from "@restobar/ui";
 import HeaderContent from "../../components/HeaderContent";
-import Input from "../../components/form/Input";
-import ButtonGoBack from "../../components/ButtonGoBack";
 
 /* Constants */
 import {

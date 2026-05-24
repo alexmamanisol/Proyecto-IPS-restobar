@@ -17,3 +17,11 @@ PROBLEMAS:
 SUGERENCIAS:
 
 Inserten sus variables de entorno en el derectorio ROOT de nuestro proyecto, osea en ./IPS-restobar
+
+FRONT ISSUES:
+
+Si no les corre la aplicación NODE, traten de que forzozamente use una 
+version más antigua de openSSL
+con este comando para sistemas UNIX-LINUX
+
+export NODE_OPTIONS=--openssl-legacy-provider

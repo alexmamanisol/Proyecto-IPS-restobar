@@ -4,13 +4,10 @@ import { Link } from "react-router-dom";
 
 /* Components */
 import HeaderContent from "../../components/HeaderContent";
-import Input from "../../components/form/Input";
-import ModalButton from "../../components/ModalButton";
+import { Input, ModalButton, Checkbox, Pagination } from "@restobar/ui";
 import Modal from "react-modal";
-import Checkbox from "../../components/form/Checkbox";
 import DataTableLoader from "../../components/loader/DataTableLoader";
 import Search from "../../components/Search";
-import Pagination from "../../components/Pagination";
 import LoaderHandler from "../../components/loader/LoaderHandler";
 
 /* Actions */

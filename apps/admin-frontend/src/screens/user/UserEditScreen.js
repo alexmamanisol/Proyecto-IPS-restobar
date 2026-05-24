@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 /* Components */
 import HeaderContent from "../../components/HeaderContent";
-import Input from "../../components/form/Input";
-import Checkbox from "../../components/form/Checkbox";
-import ButtonGoBack from "../../components/ButtonGoBack";
+import { Input, Checkbox, ButtonGoBack } from "@restobar/ui";
 import LoaderHandler from "../../components/loader/LoaderHandler";
 
 /* Constants */

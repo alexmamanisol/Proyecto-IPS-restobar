@@ -4,10 +4,8 @@ import Modal from "react-modal";
 
 /* Components */
 import HeaderContent from "../../components/HeaderContent";
-import ButtonGoBack from "../../components/ButtonGoBack";
-import ViewBox from "../../components/ViewBox";
+import { ButtonGoBack, ViewBox, ModalButton } from "@restobar/ui";
 import LoaderHandler from "../../components/loader/LoaderHandler";
-import ModalButton from "../../components/ModalButton";
 import { BigSpin } from "../../components/loader/SvgLoaders";
 
 /* constants */

@@ -5,9 +5,7 @@ import axios from "axios";
 
 /* Components */
 import HeaderContent from "../../components/HeaderContent";
-import Input from "../../components/form/Input";
-import ModalButton from "../../components/ModalButton";
-import FileInput from "../../components/form/FileInput";
+import { Input, ModalButton, FileInput } from "@restobar/ui";
 import DataTableLoader from "../../components/loader/DataTableLoader";
 import LoaderHandler from "../../components/loader/LoaderHandler";
 

@@ -20,11 +20,11 @@ dist/
 /coverage
 
 # production
-/frontend/build
-/frontend/node_modules
-/backend/node_modules
-/backend/.env
-/backend/uploads/*
+/apps/admin-frontend/build
+/apps/admin-frontend/node_modules
+/apps/admin-backend/node_modules
+/apps/admin-backend/.env
+/apps/admin-backend/uploads/*
 
 
 # misc
