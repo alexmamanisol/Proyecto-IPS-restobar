@@ -121,6 +121,76 @@ importers:
         specifier: ^2.3.0
         version: 2.4.2(redux@4.2.1)
 
+  apps/cocina-backend:
+    dependencies:
+      bcrypt:
+        specifier: ^5.0.0
+        version: 5.1.1
+      cors:
+        specifier: ^2.8.5
+        version: 2.8.6
+      dotenv:
+        specifier: ^8.2.0
+        version: 8.6.0
+      express:
+        specifier: ^4.17.1
+        version: 4.22.2(supports-color@6.1.0)
+      express-async-handler:
+        specifier: ^1.1.4
+        version: 1.2.0
+      express-validator:
+        specifier: ^6.10.0
+        version: 6.15.0
+      jsonwebtoken:
+        specifier: ^8.5.1
+        version: 8.5.1
+      morgan:
+        specifier: ^1.10.0
+        version: 1.10.1
+      pg:
+        specifier: ^8.21.0
+        version: 8.21.0
+      sequelize:
+        specifier: ^6.3.5
+        version: 6.37.8(mysql2@2.3.3)(pg@8.21.0)
+    devDependencies:
+      nodemon:
+        specifier: ^2.0.5
+        version: 2.0.22
+
+  apps/cocina-frontend:
+    dependencies:
+      '@restobar/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      axios:
+        specifier: ^0.21.0
+        version: 0.21.4
+      react:
+        specifier: ^16.13.1
+        version: 16.14.0
+      react-dom:
+        specifier: ^16.14.0
+        version: 16.14.0(react@16.14.0)
+      react-redux:
+        specifier: ^7.2.2
+        version: 7.2.9(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
+      react-router-dom:
+        specifier: ^5.2.0
+        version: 5.3.4(react@16.14.0)
+      react-scripts:
+        specifier: 3.4.3
+        version: 3.4.3(eslint@6.8.0)(react@16.14.0)(typescript@3.9.10)
+      redux:
+        specifier: ^4.0.5
+        version: 4.2.1
+      redux-devtools-extension:
+        specifier: ^2.13.8
+        version: 2.13.9(redux@4.2.1)
+      redux-thunk:
+        specifier: ^2.3.0
+        version: 2.4.2(redux@4.2.1)
+
   packages/ui:
     dependencies:
       react:
@@ -2223,6 +2293,10 @@ packages:
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
+
+  cors@2.8.6:
+    resolution: {integrity: sha512-tJtZBBHA6vjIAaF6EnIaq6laBBP9aq/Y3ouVJjEfoHbRBcHBAHYcMh/w8LDrk2PvIMMq8gmopa5D4V8RmbrxGw==}
+    engines: {node: '>= 0.10'}
 
   cosmiconfig@5.2.1:
     resolution: {integrity: sha512-H65gsXo1SKjf8zmrJ67eJk8aIRKV5ff2D4uKZIBZShbhGSpEmsQOPW/SKMKYhSTrqR7ufy6RP69rPogdaPh/kA==}
@@ -10122,6 +10196,11 @@ snapshots:
   core-util-is@1.0.2: {}
 
   core-util-is@1.0.3: {}
+
+  cors@2.8.6:
+    dependencies:
+      object-assign: 4.1.1
+      vary: 1.1.2
 
   cosmiconfig@5.2.1:
     dependencies:

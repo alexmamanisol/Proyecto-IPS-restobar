@@ -1,0 +1,70 @@
+const asyncHandler = require("express-async-handler");
+const db = require("../models");
+const TiempoCoccion = db.TiempoCoccion;
+const EventoCoccion = db.EventoCoccion;
+const Product = db.Product;
+
+exports.obtenerTiempos = asyncHandler(async (req, res) => {
+    const tiempos = await TiempoCoccion.findAll({
+        include: [{ model: Product, as: "producto" }],
+    });
+    res.json(tiempos);
+});
+
+exports.actualizarTiempo = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { tiempoPromedio } = req.body;
+
+    const tiempo = await TiempoCoccion.findByPk(id);
+    if (!tiempo) {
+        res.status(404);
+        throw new Error("Tiempo de cocción no encontrado");
+    }
+
+    tiempo.tiempoPromedio = tiempoPromedio;
+    tiempo.configuradoPorUsuario = true;
+    await tiempo.save();
+
+    res.json(tiempo);
+});
+
+exports.obtenerEventosDeProducto = asyncHandler(async (req, res) => {
+    const eventos = await EventoCoccion.findAll({
+        where: { productId: req.params.productId },
+        order: [["orden", "ASC"]],
+    });
+    res.json(eventos);
+});
+
+exports.configurarEventos = asyncHandler(async (req, res) => {
+    const { productId } = req.params;
+    const { eventos } = req.body;
+
+    await EventoCoccion.destroy({ where: { productId } });
+
+    if (eventos && eventos.length > 0) {
+        const nuevos = eventos.map((e, i) => ({
+            productId: parseInt(productId),
+            nombre: e.nombre,
+            duracionSegundos: e.duracionSegundos || 0,
+            orden: i,
+        }));
+        await EventoCoccion.bulkCreate(nuevos);
+    }
+
+    const creados = await EventoCoccion.findAll({
+        where: { productId },
+        order: [["orden", "ASC"]],
+    });
+    res.json(creados);
+});
+
+exports.obtenerProductos = asyncHandler(async (req, res) => {
+    const productos = await Product.findAll({
+        include: [
+            { model: TiempoCoccion, as: "tiemposCoccion" },
+            { model: EventoCoccion, as: "eventosCoccion" },
+        ],
+    });
+    res.json(productos);
+});
