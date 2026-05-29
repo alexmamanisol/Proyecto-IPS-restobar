@@ -20,10 +20,12 @@ if (process.env.NODE_ENV === "development") {
 const pagoRoutes = require("./routes/pagoRoutes");
 const facturaRoutes = require("./routes/facturaRoutes");
 const gastoRoutes = require("./routes/gastoRoutes");
+const estadisticaRoutes = require("./routes/estadisticaRoutes");
 
 app.use("/api/caja/pagos", pagoRoutes);
 app.use("/api/caja/facturas", facturaRoutes);
 app.use("/api/caja/gastos", gastoRoutes);
+app.use("/api/caja/estadisticas", estadisticaRoutes);
 
 app.get("/api/caja", (req, res) => {
     res.json({ message: "Caja API is running" });
