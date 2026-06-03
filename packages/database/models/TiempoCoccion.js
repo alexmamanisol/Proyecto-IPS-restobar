@@ -16,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 unique: true,
             },
-            tiempoPromedio: {
+            principal: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 defaultValue: 0,
             },
-            configuradoPorUsuario: {
+            secundario: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false,
             },

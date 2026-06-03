@@ -20,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
             },
             cantidad: {
-                type: DataTypes.STRING,
+                type: DataTypes.FLOAT,
                 allowNull: false,
             },
-            unidad: {
+            unidad_medida: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },

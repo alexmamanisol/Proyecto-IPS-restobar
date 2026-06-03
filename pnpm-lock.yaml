@@ -14,6 +14,9 @@ importers:
 
   apps/admin-backend:
     dependencies:
+      '@restobar/database':
+        specifier: workspace:*
+        version: link:../../packages/database
       bcrypt:
         specifier: ^5.0.0
         version: 5.1.1
@@ -57,9 +60,6 @@ importers:
       nodemon:
         specifier: ^2.0.5
         version: 2.0.22
-      sequelize-cli:
-        specifier: ^6.2.0
-        version: 6.6.5
 
   apps/admin-frontend:
     dependencies:
@@ -123,6 +123,9 @@ importers:
 
   apps/cocina-backend:
     dependencies:
+      '@restobar/database':
+        specifier: workspace:*
+        version: link:../../packages/database
       bcrypt:
         specifier: ^5.0.0
         version: 5.1.1
@@ -147,9 +150,9 @@ importers:
       morgan:
         specifier: ^1.10.0
         version: 1.10.1
-      pg:
-        specifier: ^8.21.0
-        version: 8.21.0
+      mysql2:
+        specifier: ^2.2.5
+        version: 2.3.3
       sequelize:
         specifier: ^6.3.5
         version: 6.37.8(mysql2@2.3.3)(pg@8.21.0)
@@ -190,6 +193,25 @@ importers:
       redux-thunk:
         specifier: ^2.3.0
         version: 2.4.2(redux@4.2.1)
+
+  packages/database:
+    dependencies:
+      bcrypt:
+        specifier: ^5.0.0
+        version: 5.1.1
+      dotenv:
+        specifier: ^8.2.0
+        version: 8.6.0
+      mysql2:
+        specifier: ^2.2.5
+        version: 2.3.3
+      sequelize:
+        specifier: ^6.3.5
+        version: 6.37.8(mysql2@2.3.3)(pg@8.21.0)
+    devDependencies:
+      sequelize-cli:
+        specifier: ^6.2.0
+        version: 6.6.5
 
   packages/ui:
     dependencies:
@@ -13320,7 +13342,7 @@ snapshots:
   normalize-package-data@2.5.0:
     dependencies:
       hosted-git-info: 2.8.9
-      resolve: 1.15.0
+      resolve: 1.22.12
       semver: 5.7.2
       validate-npm-package-license: 3.0.4
 
