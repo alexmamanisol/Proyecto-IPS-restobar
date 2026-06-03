@@ -8,7 +8,9 @@ import {
 export const listPagos = () => async (dispatch) => {
     try {
         dispatch({ type: PAGO_LIST_REQUEST });
-        const { data } = await axios.get("/api/caja/pagos");
+        const { data } = await axios.get("/api/caja/pagos", {
+            headers: { "Cache-Control": "no-cache" }
+        });
         dispatch({ type: PAGO_LIST_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: PAGO_LIST_FAIL, payload: error.response?.data?.message || error.message });
