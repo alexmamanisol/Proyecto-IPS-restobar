@@ -57,12 +57,36 @@ const getResumenGastos = asyncHandler(async (req, res) => {
 
 // GET /api/caja/estadisticas/resumen
 const getResumenGeneral = asyncHandler(async (req, res) => {
-    const totalIngresos = await Pago.sum("monto", {
-        where: { estado: "completado" },
-    });
-    const totalGastos = await Gasto.sum("monto");
+    const { periodo } = req.query; // hoy, semana, mes, año
+
+    // Construir rango de fechas según periodo
+    let fechaDesde = null;
+    const ahora = new Date();
+
+    if (periodo === "hoy") {
+        fechaDesde = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
+    } else if (periodo === "semana") {
+        fechaDesde = new Date();
+        fechaDesde.setDate(ahora.getDate() - 7);
+    } else if (periodo === "mes") {
+        fechaDesde = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
+    } else if (periodo === "año") {
+        fechaDesde = new Date(ahora.getFullYear(), 0, 1);
+    }
+    // Si no viene periodo, devuelve todo (comportamiento anterior)
+
+    const whereClausePago = fechaDesde
+        ? { estado: "completado", createdAt: { [Op.gte]: fechaDesde } }
+        : { estado: "completado" };
+
+    const whereClauseGasto = fechaDesde
+        ? { createdAt: { [Op.gte]: fechaDesde } }
+        : {};
+
+    const totalIngresos = await Pago.sum("monto", { where: whereClausePago });
+    const totalGastos = await Gasto.sum("monto", { where: whereClauseGasto });
     const totalFacturas = await Factura.count();
-    const totalPagos = await Pago.count({ where: { estado: "completado" } });
+    const totalPagos = await Pago.count({ where: whereClausePago });
 
     res.json({
         totalIngresos: totalIngresos || 0,

@@ -6,10 +6,12 @@ import {
     ESTADISTICA_GASTOS_REQUEST, ESTADISTICA_GASTOS_SUCCESS, ESTADISTICA_GASTOS_FAIL,
 } from "../constants/estadisticaConstants";
 
-export const getResumenGeneral = () => async (dispatch) => {
+export const getResumenGeneral = (periodo = "") => async (dispatch) => {
     try {
         dispatch({ type: ESTADISTICA_RESUMEN_REQUEST });
-        const { data } = await axios.get("/api/caja/estadisticas/resumen");
+        const { data } = await axios.get(
+            `/api/caja/estadisticas/resumen${periodo ? `?periodo=${periodo}` : ""}`
+        );
         dispatch({ type: ESTADISTICA_RESUMEN_SUCCESS, payload: data });
     } catch (error) {
         dispatch({ type: ESTADISTICA_RESUMEN_FAIL, payload: error.response?.data?.message || error.message });
