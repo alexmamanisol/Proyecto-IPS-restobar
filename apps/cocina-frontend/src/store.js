@@ -1,19 +1,25 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { userLoginReducer } from "./reducers/userReducers";
 import {
-    colaCoccionReducer,
-    colaPendientesReducer,
-    colaTerminadosReducer,
+    productosConEventosReducer,
+    ordenesPendientesReducer,
 } from "./reducers/coccionReducers";
 
 const reducer = combineReducers({
-    colaCoccion: colaCoccionReducer,
-    colaPendientes: colaPendientesReducer,
-    colaTerminados: colaTerminadosReducer,
+    userLogin: userLoginReducer,
+    productosConEventos: productosConEventosReducer,
+    ordenesPendientes: ordenesPendientesReducer,
 });
 
-const initialState = {};
+const userInfoFromStorage = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo"))
+    : null;
+
+const initialState = {
+    userLogin: { userInfo: userInfoFromStorage },
+};
 
 const middleware = [thunk];
 

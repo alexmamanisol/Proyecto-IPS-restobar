@@ -7,10 +7,6 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: "productId",
                 as: "producto",
             });
-            EventoCoccion.hasMany(models.EventoCola, {
-                foreignKey: "eventoCoccionId",
-                as: "eventosCola",
-            });
         }
     }
     EventoCoccion.init(

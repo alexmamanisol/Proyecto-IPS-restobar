@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const path = require("path");
+const cors = require("cors");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -23,6 +24,8 @@ const tableRoutes = require("./routes/table");
 const orderRoutes = require("./routes/order");
 const uploadRoutes = require("./routes/upload");
 
+
+app.use(cors({origin:`${process.env.HOST}:${process.env.ADMIN_FRONTEND_PORT || 3000}`}));
 /* Routes */
 app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);

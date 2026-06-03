@@ -1,93 +1,50 @@
 import axios from "axios";
 import {
-    COLA_LIST_REQUEST,
-    COLA_LIST_SUCCESS,
-    COLA_LIST_FAIL,
-    COLA_PENDIENTES_REQUEST,
-    COLA_PENDIENTES_SUCCESS,
-    COLA_PENDIENTES_FAIL,
-    COLA_TERMINADOS_REQUEST,
-    COLA_TERMINADOS_SUCCESS,
-    COLA_TERMINADOS_FAIL,
-    COLA_AGREGAR_REQUEST,
-    COLA_AGREGAR_SUCCESS,
-    COLA_AGREGAR_FAIL,
-    EVENTO_AVANZAR_REQUEST,
-    EVENTO_AVANZAR_SUCCESS,
-    EVENTO_AVANZAR_FAIL,
+    PRODUCTOS_REQUEST,
+    PRODUCTOS_SUCCESS,
+    PRODUCTOS_FAIL,
+    PEDIDOS_REQUEST,
+    PEDIDOS_SUCCESS,
+    PEDIDOS_FAIL,
 } from "../constants/coccionConstants";
 
-const API = "/api/coccion/cola";
-
-const config = () => ({
+const authConfig = () => ({
     headers: {
-        Authorization: `Bearer ${localStorage.getItem("userInfo")
-            ? JSON.parse(localStorage.getItem("userInfo")).token
-            : ""
-            }`,
+        Authorization: `Bearer ${
+            localStorage.getItem("userInfo")
+                ? JSON.parse(localStorage.getItem("userInfo")).token
+                : ""
+        }`,
     },
 });
 
-export const listarCola = () => async (dispatch) => {
+export const fetchProductosConEventos = () => async (dispatch) => {
     try {
-        dispatch({ type: COLA_LIST_REQUEST });
-        const { data } = await axios.get(API, config());
-        dispatch({ type: COLA_LIST_SUCCESS, payload: data });
+        dispatch({ type: PRODUCTOS_REQUEST });
+        const { data } = await axios.get(
+            "/api/coccion/tiempos/productos",
+            authConfig()
+        );
+        dispatch({ type: PRODUCTOS_SUCCESS, payload: data });
     } catch (error) {
         dispatch({
-            type: COLA_LIST_FAIL,
+            type: PRODUCTOS_FAIL,
             payload: error.response?.data?.message || error.message,
         });
     }
 };
 
-export const listarPendientes = () => async (dispatch) => {
+export const fetchPedidos = () => async (dispatch) => {
     try {
-        dispatch({ type: COLA_PENDIENTES_REQUEST });
-        const { data } = await axios.get(`${API}/pendientes`, config());
-        dispatch({ type: COLA_PENDIENTES_SUCCESS, payload: data });
+        dispatch({ type: PEDIDOS_REQUEST });
+        const { data } = await axios.get(
+            "/api/coccion/pedidos",
+            authConfig()
+        );
+        dispatch({ type: PEDIDOS_SUCCESS, payload: data });
     } catch (error) {
         dispatch({
-            type: COLA_PENDIENTES_FAIL,
-            payload: error.response?.data?.message || error.message,
-        });
-    }
-};
-
-export const listarTerminados = () => async (dispatch) => {
-    try {
-        dispatch({ type: COLA_TERMINADOS_REQUEST });
-        const { data } = await axios.get(`${API}/terminados`, config());
-        dispatch({ type: COLA_TERMINADOS_SUCCESS, payload: data });
-    } catch (error) {
-        dispatch({
-            type: COLA_TERMINADOS_FAIL,
-            payload: error.response?.data?.message || error.message,
-        });
-    }
-};
-
-export const agregarACola = (orderId, productId) => async (dispatch) => {
-    try {
-        dispatch({ type: COLA_AGREGAR_REQUEST });
-        const { data } = await axios.post(API, { orderId, productId }, config());
-        dispatch({ type: COLA_AGREGAR_SUCCESS, payload: data });
-    } catch (error) {
-        dispatch({
-            type: COLA_AGREGAR_FAIL,
-            payload: error.response?.data?.message || error.message,
-        });
-    }
-};
-
-export const avanzarEvento = (eventoId) => async (dispatch) => {
-    try {
-        dispatch({ type: EVENTO_AVANZAR_REQUEST });
-        const { data } = await axios.put(`${API}/${eventoId}/avanzar`, {}, config());
-        dispatch({ type: EVENTO_AVANZAR_SUCCESS, payload: data });
-    } catch (error) {
-        dispatch({
-            type: EVENTO_AVANZAR_FAIL,
+            type: PEDIDOS_FAIL,
             payload: error.response?.data?.message || error.message,
         });
     }

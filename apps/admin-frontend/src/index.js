@@ -5,7 +5,9 @@ import {Provider} from 'react-redux'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
+import axios from "axios";
 
+axios.defaults.baseURL = `${process.env.HOST || "http://localhost"}:${process.env.ADMIN_BACKEND_PORT || 5000}`;
 
 ReactDOM.render(
 

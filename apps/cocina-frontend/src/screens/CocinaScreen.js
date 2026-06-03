@@ -1,32 +1,98 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loader, Message } from "@restobar/ui";
-import { listarPendientes, listarTerminados, avanzarEvento } from "../actions/coccionActions";
+import { fetchProductosConEventos, fetchPedidos } from "../actions/coccionActions";
+import { logout } from "../actions/userActions";
 import TarjetaProducto from "../components/TarjetaProducto";
+
+let uid = 0;
+const nextId = () => ++uid;
 
 const CocinaScreen = () => {
     const dispatch = useDispatch();
 
-    const colaPendientes = useSelector((state) => state.colaPendientes);
-    const { loading: loadingPend, error: errorPend, items: pendientes } = colaPendientes;
+    const productosConEventos = useSelector((state) => state.productosConEventos);
+    const ordenesPendientes = useSelector((state) => state.ordenesPendientes);
 
-    const colaTerminados = useSelector((state) => state.colaTerminados);
-    const { loading: loadingTerm, error: errorTerm, items: terminados } = colaTerminados;
+    const [colaLocal, setColaLocal] = useState([]);
+    const [completados, setCompletados] = useState([]);
+    const intervalRef = useRef(null);
 
     useEffect(() => {
-        dispatch(listarPendientes());
-        dispatch(listarTerminados());
+        dispatch(fetchProductosConEventos());
+        dispatch(fetchPedidos());
         const interval = setInterval(() => {
-            dispatch(listarPendientes());
-            dispatch(listarTerminados());
-        }, 10000);
+            dispatch(fetchPedidos());
+        }, 15000);
         return () => clearInterval(interval);
     }, [dispatch]);
 
-    const handleAvanzar = (eventoId) => {
-        dispatch(avanzarEvento(eventoId));
+    useEffect(() => {
+        intervalRef.current = setInterval(() => {
+            setColaLocal((prev) =>
+                prev
+                    .map((item) => {
+                        if (item.completado) return item;
+                        const eventos = item.eventos.map((e) => {
+                            if (e.completado) return e;
+                            if (!e.activo) return e;
+                            const restante = Math.max(0, e.restante - 1);
+                            return { ...e, restante, completado: restante === 0 };
+                        });
+                        const activoIndex = eventos.findIndex((e) => e.activo);
+                        if (activoIndex !== -1 && eventos[activoIndex].completado) {
+                            const nextIndex = activoIndex + 1;
+                            if (nextIndex < eventos.length) {
+                                eventos[nextIndex] = { ...eventos[nextIndex], activo: true };
+                            }
+                        }
+                        const completado = eventos.every((e) => e.completado);
+                        return { ...item, eventos, completado };
+                    })
+                    .filter((item) => {
+                        if (item.completado) {
+                            setTimeout(() => {
+                                setCompletados((prev) => [...prev, item]);
+                            }, 0);
+                            return false;
+                        }
+                        return true;
+                    })
+            );
+        }, 1000);
+        return () => clearInterval(intervalRef.current);
+    }, []);
+
+    const cocinarProducto = useCallback((orden, producto) => {
+        const eventos = (producto.eventosCoccion || []).map((ev, i) => ({
+            nombre: ev.nombre,
+            duracionSegundos: ev.duracionSegundos,
+            restante: ev.duracionSegundos,
+            activo: i === 0,
+            completado: false,
+        }));
+        if (eventos.length === 0) {
+            setCompletados((prev) => [
+                ...prev,
+                { id: nextId(), orderId: orden.id, producto, eventos: [], completado: true },
+            ]);
+            return;
+        }
+        setColaLocal((prev) => [
+            ...prev,
+            { id: nextId(), orderId: orden.id, producto, eventos, completado: false },
+        ]);
+    }, []);
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        dispatch(logout());
     };
+
+    const productosEnCola = new Set(
+        [...colaLocal, ...completados].map((i) => `${i.orderId}-${i.producto?.id}`)
+    );
 
     return (
         <div className="wrapper">
@@ -41,6 +107,16 @@ const CocinaScreen = () => {
                         <Link to="/menu" className="nav-link btn btn-outline-info">
                             <i className="fas fa-book" /> Menú
                         </Link>
+                    </li>
+                    <li className="nav-item">
+                        <span
+                            style={{ cursor: "pointer" }}
+                            onClick={(e) => handleLogout(e)}
+                            className="nav-link btn btn-outline-danger"
+                            role="button"
+                        >
+                            <i className="fas fa-power-off" /> Salir
+                        </span>
                     </li>
                 </ul>
             </nav>
@@ -61,28 +137,79 @@ const CocinaScreen = () => {
                 <section className="content">
                     <div className="container-fluid">
                         <div className="row">
-                            <div className="col-12 col-lg-8">
+                            <div className="col-12 col-lg-4">
+                                <div className="card card-info">
+                                    <div className="card-header">
+                                        <h3 className="card-title">
+                                            <i className="fas fa-clipboard-list" /> Pedidos Pendientes
+                                        </h3>
+                                        <Loader variable={ordenesPendientes.loading} />
+                                    </div>
+                                    <div className="card-body">
+                                        <Message message={ordenesPendientes.error} color={"danger"} />
+                                        {ordenesPendientes.items?.length === 0 && !ordenesPendientes.loading ? (
+                                            <p className="text-muted text-center">No hay pedidos</p>
+                                        ) : (
+                                            ordenesPendientes.items?.map((orden) => (
+                                                <div key={orden.id} className="mb-3 p-2 border rounded">
+                                                    <h6>
+                                                        Orden #{orden.id}
+                                                        {orden.tableId && (
+                                                            <small className="ml-2 text-muted">
+                                                                Mesa {orden.tableId}
+                                                            </small>
+                                                        )}
+                                                    </h6>
+                                                    {(orden.products || []).map((prod) => {
+                                                        const key = `${orden.id}-${prod.id}`;
+                                                        const yaEnCola = productosEnCola.has(key);
+                                                        return (
+                                                            <div
+                                                                key={prod.id}
+                                                                className="d-flex justify-content-between align-items-center mb-1"
+                                                            >
+                                                                <span>
+                                                                    {prod.name}
+                                                                    {prod.OrderProduct?.quantity > 1 && (
+                                                                        <span className="badge badge-secondary ml-1">
+                                                                            x{prod.OrderProduct.quantity}
+                                                                        </span>
+                                                                    )}
+                                                                </span>
+                                                                <button
+                                                                    className={`btn btn-sm ${yaEnCola ? "btn-secondary" : "btn-success"}`}
+                                                                    disabled={yaEnCola}
+                                                                    onClick={() => cocinarProducto(orden, prod)}
+                                                                >
+                                                                    {yaEnCola ? "En cocina" : "Cocinar"}
+                                                                </button>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            ))
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-12 col-lg-5">
                                 <div className="card card-warning">
                                     <div className="card-header">
                                         <h3 className="card-title">
-                                            <i className="fas fa-clock" /> Alimentos por Hacer
+                                            <i className="fas fa-fire" /> En Cocción
                                         </h3>
-                                        <Loader variable={loadingPend} />
                                     </div>
                                     <div className="card-body">
-                                        <Message message={errorPend} color={"danger"} />
-                                        {pendientes.length === 0 && !loadingPend ? (
+                                        {colaLocal.length === 0 ? (
                                             <p className="text-muted text-center">
                                                 No hay alimentos en preparación
                                             </p>
                                         ) : (
                                             <div className="row">
-                                                {pendientes.map((item) => (
+                                                {colaLocal.map((item) => (
                                                     <div key={item.id} className="col-12 col-md-6 mb-3">
-                                                        <TarjetaProducto
-                                                            item={item}
-                                                            onAvanzar={handleAvanzar}
-                                                        />
+                                                        <TarjetaProducto item={item} />
                                                     </div>
                                                 ))}
                                             </div>
@@ -91,31 +218,28 @@ const CocinaScreen = () => {
                                 </div>
                             </div>
 
-                            <div className="col-12 col-lg-4">
+                            <div className="col-12 col-lg-3">
                                 <div className="card card-success">
                                     <div className="card-header">
                                         <h3 className="card-title">
-                                            <i className="fas fa-check-circle" /> Alimentos Terminados
+                                            <i className="fas fa-check-circle" /> Completados
                                         </h3>
-                                        <Loader variable={loadingTerm} />
                                     </div>
                                     <div className="card-body">
-                                        <Message message={errorTerm} color={"danger"} />
-                                        {terminados.length === 0 && !loadingTerm ? (
+                                        {completados.length === 0 ? (
                                             <p className="text-muted text-center">
                                                 No hay alimentos terminados
                                             </p>
                                         ) : (
                                             <ul className="products-list product-list-in-card">
-                                                {terminados.map((item) => (
+                                                {completados.map((item) => (
                                                     <li key={item.id} className="item">
                                                         <div className="product-info">
                                                             <span className="product-title">
                                                                 {item.producto?.name}
                                                             </span>
                                                             <span className="product-description">
-                                                                Orden #{item.orderId} ·{" "}
-                                                                {item.completadoEn && new Date(item.completadoEn).toLocaleTimeString()}
+                                                                Orden #{item.orderId}
                                                             </span>
                                                         </div>
                                                     </li>

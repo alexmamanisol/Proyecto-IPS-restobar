@@ -1,8 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import axios from "axios";
 import store from "./store";
 import App from "./App";
+
+axios.defaults.baseURL = `${process.env.HOST || "http://localhost"}:${process.env.COCINA_BACKEND_PORT || 5001}`;
 
 ReactDOM.render(
     <Provider store={store}>
