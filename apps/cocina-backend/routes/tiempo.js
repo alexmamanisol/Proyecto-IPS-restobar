@@ -12,7 +12,7 @@ const {
 router.get("/", protect, obtenerTiempos);
 router.get("/productos", protect, obtenerProductos);
 router.get("/:productId/eventos", protect, obtenerEventosDeProducto);
-router.put("/:id", protect, actualizarTiempo);
+router.put("/product/:productId", protect, actualizarTiempo);
 router.put("/:productId/eventos", protect, configurarEventos);
 
 module.exports = router;

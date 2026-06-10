@@ -12,18 +12,18 @@ exports.obtenerTiempos = asyncHandler(async (req, res) => {
 });
 
 exports.actualizarTiempo = asyncHandler(async (req, res) => {
-    const { id } = req.params;
+    const { productId } = req.params;
     const { tiempoPromedio } = req.body;
 
-    const tiempo = await TiempoCoccion.findByPk(id);
-    if (!tiempo) {
-        res.status(404);
-        throw new Error("Tiempo de cocción no encontrado");
-    }
+    const [tiempo] = await TiempoCoccion.findOrCreate({
+        where: { productId },
+        defaults: { productId, principal: tiempoPromedio },
+    });
 
-    tiempo.tiempoPromedio = tiempoPromedio;
-    tiempo.configuradoPorUsuario = true;
-    await tiempo.save();
+    if (tiempo.principal !== tiempoPromedio) {
+        tiempo.principal = tiempoPromedio;
+        await tiempo.save();
+    }
 
     res.json(tiempo);
 });

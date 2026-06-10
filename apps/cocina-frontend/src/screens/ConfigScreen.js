@@ -3,6 +3,15 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Message } from "@restobar/ui";
 
+/*
+export default function displaySuccess(tiempo){
+  let message="Se ha enviado el tiempo: " + tiempo +"seg."
+  return <div>
+    <Message message={message} color={"success"} />
+  </div>;
+};
+*/
+
 const API = "/api/coccion";
 
 const config = () => ({
@@ -31,9 +40,9 @@ const ConfigScreen = () => {
         }
     };
 
-    const actualizarTiempo = async (id, tiempoPromedio) => {
+    const actualizarTiempo = async (productId, tiempoPromedio) => {
         try {
-            await axios.put(`${API}/tiempos/${id}`, { tiempoPromedio }, config());
+            await axios.put(`${API}/tiempos/product/${productId}`, { tiempoPromedio }, config());
             cargarProductos();
         } catch (err) {
             setError(err.response?.data?.message || err.message);
@@ -91,7 +100,7 @@ const ConfigScreen = () => {
 };
 
 const ProductoConfig = ({ producto, onGuardarTiempo, onGuardarEventos }) => {
-    const [tiempo, setTiempo] = useState(producto.tiemposCoccion?.[0]?.tiempoPromedio || 0);
+    const [tiempo, setTiempo] = useState(producto.tiemposCoccion?.[0]?.principal ?? 0);
     const [eventos, setEventos] = useState(
         producto.eventosCoccion?.map((e) => ({
             nombre: e.nombre,
@@ -127,14 +136,14 @@ const ProductoConfig = ({ producto, onGuardarTiempo, onGuardarEventos }) => {
                             className="form-control"
                             value={tiempo}
                             onChange={(e) => setTiempo(parseInt(e.target.value) || 0)}
+                            onFocus={(e) => e.target.select()}
                         />
                         <div className="input-group-append">
                             <button
                                 className="btn btn-success"
                                 onClick={() => {
-                                    if (producto.tiemposCoccion?.[0]?.id) {
-                                        onGuardarTiempo(producto.tiemposCoccion[0].id, tiempo);
-                                    }
+                                    onGuardarTiempo(producto.id, tiempo);
+                                    // displaySuccess(tiempo);
                                 }}
                             >
                                 <i className="fas fa-save" />
@@ -154,6 +163,7 @@ const ProductoConfig = ({ producto, onGuardarTiempo, onGuardarEventos }) => {
                                 placeholder="Nombre del evento"
                                 value={ev.nombre}
                                 onChange={(e) => cambiarEvento(i, "nombre", e.target.value)}
+                                onFocus={(e) => e.target.select()}
                             />
                         </div>
                         <div className="col-4">
@@ -163,6 +173,7 @@ const ProductoConfig = ({ producto, onGuardarTiempo, onGuardarEventos }) => {
                                 placeholder="Duración (seg)"
                                 value={ev.duracionSegundos}
                                 onChange={(e) => cambiarEvento(i, "duracionSegundos", parseInt(e.target.value) || 0)}
+                                onFocus={(e) => e.target.select()}
                             />
                         </div>
                         <div className="col-3">
