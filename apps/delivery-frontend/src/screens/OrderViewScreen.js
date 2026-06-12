@@ -205,60 +205,144 @@ const OrderViewScreen = ({ match, history }) => {
 
                                 {metodoPago === "tarjeta" && (
                                     <div className="card card-outline card-primary">
-                                        <div className="card-header">
-                                            <h5 className="card-title">Datos de la Tarjeta</h5>
+                                        <div className="card-header" style={{ background: "#f8f9fa" }}>
+                                            <h5 className="card-title">
+                                                <i className="fas fa-credit-card mr-2 text-primary" />
+                                                Datos de la Tarjeta
+                                            </h5>
                                         </div>
                                         <div className="card-body">
-                                            {errorTarjeta && <div className="alert alert-danger">{errorTarjeta}</div>}
+                                            {errorTarjeta && (
+                                                <div className="alert alert-danger">
+                                                    <i className="fas fa-exclamation-circle mr-2" />
+                                                    {errorTarjeta}
+                                                </div>
+                                            )}
+
+                                            {/* Numero de tarjeta */}
                                             <div className="form-group">
-                                                <label>Numero de tarjeta</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="1234567890123456"
-                                                    maxLength="16"
-                                                    value={tarjeta.numero}
-                                                    onChange={(e) => setTarjeta({ ...tarjeta, numero: e.target.value.replace(/\D/g, "") })}
-                                                />
+                                                <label className="font-weight-bold">
+                                                    <i className="fas fa-credit-card mr-1 text-muted" />
+                                                    Numero de tarjeta
+                                                </label>
+                                                <div className="input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text"><i className="fas fa-credit-card" /></span>
+                                                    </div>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control form-control-lg"
+                                                        placeholder="1234  5678  9012  3456"
+                                                        maxLength="16"
+                                                        value={tarjeta.numero}
+                                                        onChange={(e) => setTarjeta({ ...tarjeta, numero: e.target.value.replace(/\D/g, "") })}
+                                                    />
+                                                </div>
+                                                <small className="text-muted">Ingresa los 16 digitos de tu tarjeta</small>
                                             </div>
+
+                                            {/* Nombre */}
                                             <div className="form-group">
-                                                <label>Nombre en la tarjeta</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="JUAN PEREZ"
-                                                    value={tarjeta.nombre}
-                                                    onChange={(e) => setTarjeta({ ...tarjeta, nombre: e.target.value.toUpperCase() })}
-                                                />
+                                                <label className="font-weight-bold">
+                                                    <i className="fas fa-user mr-1 text-muted" />
+                                                    Nombre del titular
+                                                </label>
+                                                <div className="input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text"><i className="fas fa-user" /></span>
+                                                    </div>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control form-control-lg"
+                                                        placeholder="Igual como aparece en la tarjeta"
+                                                        value={tarjeta.nombre}
+                                                        onChange={(e) => setTarjeta({ ...tarjeta, nombre: e.target.value.toUpperCase() })}
+                                                    />
+                                                </div>
+                                                <small className="text-muted">Escribe tu nombre tal como aparece en la tarjeta</small>
                                             </div>
+
                                             <div className="row">
+                                                {/* Expiracion */}
                                                 <div className="col-6">
                                                     <div className="form-group">
-                                                        <label>Expiracion</label>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            placeholder="MM/AA"
-                                                            maxLength="5"
-                                                            value={tarjeta.expiracion}
-                                                            onChange={(e) => setTarjeta({ ...tarjeta, expiracion: e.target.value })}
-                                                        />
+                                                        <label className="font-weight-bold">
+                                                            <i className="fas fa-calendar mr-1 text-muted" />
+                                                            Fecha de vencimiento
+                                                        </label>
+                                                        <div className="input-group">
+                                                            <div className="input-group-prepend">
+                                                                <span className="input-group-text"><i className="fas fa-calendar" /></span>
+                                                            </div>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control form-control-lg"
+                                                                placeholder="MM/AA"
+                                                                maxLength="5"
+                                                                value={tarjeta.expiracion}
+                                                                onChange={(e) => {
+                                                                    let val = e.target.value.replace(/\D/g, "");
+                                                                    if (val.length >= 2) val = val.slice(0,2) + "/" + val.slice(2);
+                                                                    setTarjeta({ ...tarjeta, expiracion: val });
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <small className="text-muted">Mes y año de vencimiento</small>
                                                     </div>
                                                 </div>
+
+                                                {/* CVV */}
                                                 <div className="col-6">
                                                     <div className="form-group">
-                                                        <label>CVV</label>
-                                                        <input
-                                                            type="password"
-                                                            className="form-control"
-                                                            placeholder="***"
-                                                            maxLength="3"
-                                                            value={tarjeta.cvv}
-                                                            onChange={(e) => setTarjeta({ ...tarjeta, cvv: e.target.value.replace(/\D/g, "") })}
-                                                        />
+                                                        <label className="font-weight-bold">
+                                                            <i className="fas fa-lock mr-1 text-muted" />
+                                                            CVV / CVC
+                                                        </label>
+                                                        <div className="input-group">
+                                                            <div className="input-group-prepend">
+                                                                <span className="input-group-text"><i className="fas fa-lock" /></span>
+                                                            </div>
+                                                            <input
+                                                                type="password"
+                                                                className="form-control form-control-lg"
+                                                                placeholder="3 digitos"
+                                                                maxLength="3"
+                                                                value={tarjeta.cvv}
+                                                                onChange={(e) => setTarjeta({ ...tarjeta, cvv: e.target.value.replace(/\D/g, "") })}
+                                                            />
+                                                        </div>
+                                                        <small className="text-muted">Codigo de seguridad al reverso</small>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            {/* Preview tarjeta */}
+                                            <div style={{
+                                                background: "linear-gradient(135deg, #1a1a2e, #16213e)",
+                                                borderRadius: "12px",
+                                                padding: "20px",
+                                                color: "white",
+                                                marginTop: "10px"
+                                            }}>
+                                                <div className="d-flex justify-content-between mb-3">
+                                                    <i className="fas fa-wifi" style={{ transform: "rotate(90deg)" }} />
+                                                    <i className="fas fa-credit-card" style={{ fontSize: "2rem", opacity: 0.7 }} />
+                                                </div>
+                                                <p style={{ letterSpacing: "3px", fontSize: "1.1rem", marginBottom: "15px" }}>
+                                                    {tarjeta.numero ? tarjeta.numero.replace(/(.{4})/g, "$1 ").trim() : "#### #### #### ####"}
+                                                </p>
+                                                <div className="d-flex justify-content-between">
+                                                    <div>
+                                                        <small style={{ opacity: 0.7 }}>TITULAR</small>
+                                                        <p style={{ margin: 0 }}>{tarjeta.nombre || "NOMBRE APELLIDO"}</p>
+                                                    </div>
+                                                    <div>
+                                                        <small style={{ opacity: 0.7 }}>VENCE</small>
+                                                        <p style={{ margin: 0 }}>{tarjeta.expiracion || "MM/AA"}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 )}
