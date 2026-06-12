@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
+            categoria: {
+                type: DataTypes.ENUM("A", "B", "C"),
+                allowNull: false,
+                defaultValue: "C",
+            },
             cantidad: {
                 type: DataTypes.FLOAT,
                 allowNull: false,

@@ -3,15 +3,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Message } from "@restobar/ui";
 
-/*
-export default function displaySuccess(tiempo){
-  let message="Se ha enviado el tiempo: " + tiempo +"seg."
-  return <div>
-    <Message message={message} color={"success"} />
-  </div>;
-};
-*/
-
 const API = "/api/coccion";
 
 const config = () => ({
@@ -42,19 +33,25 @@ const ConfigScreen = () => {
 
     const actualizarTiempo = async (productId, tiempoPromedio) => {
         try {
-            await axios.put(`${API}/tiempos/product/${productId}`, { tiempoPromedio }, config());
-            cargarProductos();
+            const { data } = await axios.put(`${API}/tiempos/product/${productId}`, { tiempoPromedio }, config());
+            await cargarProductos();
+            return data;
         } catch (err) {
-            setError(err.response?.data?.message || err.message);
+            const msg = err.response?.data?.message || err.message;
+            setError(msg);
+            throw new Error(msg);
         }
     };
 
     const guardarEventos = async (productId, eventos) => {
         try {
-            await axios.put(`${API}/tiempos/${productId}/eventos`, { eventos }, config());
-            cargarProductos();
+            const { data } = await axios.put(`${API}/tiempos/${productId}/eventos`, { eventos }, config());
+            await cargarProductos();
+            return data;
         } catch (err) {
-            setError(err.response?.data?.message || err.message);
+            const msg = err.response?.data?.message || err.message;
+            setError(msg);
+            throw new Error(msg);
         }
     };
 
@@ -107,6 +104,13 @@ const ProductoConfig = ({ producto, onGuardarTiempo, onGuardarEventos }) => {
             duracionSegundos: e.duracionSegundos,
         })) || [{ nombre: "", duracionSegundos: 0 }]
     );
+    const [successMsg, setSuccessMsg] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+
+    const mostrarSuccess = (msg) => {
+        setSuccessMsg(msg);
+        setTimeout(() => setSuccessMsg(""), 3000);
+    };
 
     const agregarEvento = () => {
         setEventos([...eventos, { nombre: "", duracionSegundos: 0 }]);
@@ -141,14 +145,20 @@ const ProductoConfig = ({ producto, onGuardarTiempo, onGuardarEventos }) => {
                         <div className="input-group-append">
                             <button
                                 className="btn btn-success"
-                                onClick={() => {
-                                    onGuardarTiempo(producto.id, tiempo);
-                                    // displaySuccess(tiempo);
+                                onClick={async () => {
+                                    try {
+                                        await onGuardarTiempo(producto.id, tiempo);
+                                        mostrarSuccess("Tiempo guardado: " + tiempo + "s");
+                                    } catch (e) {
+                                        setErrorMsg(e.message);
+                                    }
                                 }}
                             >
                                 <i className="fas fa-save" />
                             </button>
                         </div>
+                        {successMsg && <Message message={successMsg} color={"success"} />}
+                        {errorMsg && <Message message={errorMsg} color={"danger"} />}
                     </div>
                 </div>
 
@@ -189,7 +199,14 @@ const ProductoConfig = ({ producto, onGuardarTiempo, onGuardarEventos }) => {
                     </button>
                     <button
                         className="btn btn-primary btn-sm"
-                        onClick={() => onGuardarEventos(producto.id, eventos)}
+                        onClick={async () => {
+                            try {
+                                await onGuardarEventos(producto.id, eventos);
+                                mostrarSuccess("Eventos guardados correctamente");
+                            } catch (e) {
+                                setErrorMsg(e.message);
+                            }
+                        }}
                     >
                         <i className="fas fa-save" /> Guardar eventos
                     </button>

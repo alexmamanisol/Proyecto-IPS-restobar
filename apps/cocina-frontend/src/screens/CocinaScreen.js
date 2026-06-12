@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Loader, Message } from "@restobar/ui";
+import { Loader, Message, Alert } from "@restobar/ui";
 import { fetchProductosConEventos, fetchPedidos } from "../actions/coccionActions";
 import { logout } from "../actions/userActions";
 import TarjetaProducto from "../components/TarjetaProducto";
@@ -17,7 +17,26 @@ const CocinaScreen = () => {
 
     const [colaLocal, setColaLocal] = useState([]);
     const [completados, setCompletados] = useState([]);
+    const [successMsg, setSuccessMsg] = useState("");
     const intervalRef = useRef(null);
+    const completadosLenRef = useRef(0);
+
+    const notificar = (msg) => {
+        setSuccessMsg(msg);
+        setTimeout(() => setSuccessMsg(""), 3000);
+    };
+
+    useEffect(() => {
+        if (completados.length > completadosLenRef.current) {
+            const nuevos = completados.slice(completadosLenRef.current);
+            nuevos.forEach((item) => {
+                if (item.producto) {
+                    notificar(`${item.producto.name} — cocción terminada`);
+                }
+            });
+        }
+        completadosLenRef.current = completados.length;
+    }, [completados]);
 
     useEffect(() => {
         dispatch(fetchProductosConEventos());
@@ -77,12 +96,14 @@ const CocinaScreen = () => {
                 ...prev,
                 { id: nextId(), orderId: orden.id, producto, eventos: [], completado: true },
             ]);
+            notificar(`${producto.name} completado (sin eventos)`);
             return;
         }
         setColaLocal((prev) => [
             ...prev,
             { id: nextId(), orderId: orden.id, producto, eventos, completado: false },
         ]);
+        notificar(`${producto.name} agregado a cocción`);
     }, []);
 
     const handleLogout = (e) => {
@@ -133,6 +154,14 @@ const CocinaScreen = () => {
                         </div>
                     </div>
                 </section>
+
+                {successMsg && (
+                    <section className="content" style={{ paddingBottom: 0 }}>
+                        <div className="container-fluid">
+                            <Message message={successMsg} color={"success"} />
+                        </div>
+                    </section>
+                )}
 
                 <section className="content">
                     <div className="container-fluid">
@@ -194,11 +223,12 @@ const CocinaScreen = () => {
                             </div>
 
                             <div className="col-12 col-lg-5">
-                                <div className="card card-warning">
+                                    <div className="card card-warning">
                                     <div className="card-header">
                                         <h3 className="card-title">
                                             <i className="fas fa-fire" /> En Cocción
                                         </h3>
+                                        <span className="float-right badge badge-warning">{colaLocal.length}</span>
                                     </div>
                                     <div className="card-body">
                                         {colaLocal.length === 0 ? (
@@ -219,11 +249,12 @@ const CocinaScreen = () => {
                             </div>
 
                             <div className="col-12 col-lg-3">
-                                <div className="card card-success">
+                                    <div className="card card-success">
                                     <div className="card-header">
                                         <h3 className="card-title">
                                             <i className="fas fa-check-circle" /> Completados
                                         </h3>
+                                        <span className="float-right badge badge-success">{completados.length}</span>
                                     </div>
                                     <div className="card-body">
                                         {completados.length === 0 ? (
@@ -231,20 +262,28 @@ const CocinaScreen = () => {
                                                 No hay alimentos terminados
                                             </p>
                                         ) : (
-                                            <ul className="products-list product-list-in-card">
-                                                {completados.map((item) => (
-                                                    <li key={item.id} className="item">
-                                                        <div className="product-info">
-                                                            <span className="product-title">
-                                                                {item.producto?.name}
-                                                            </span>
-                                                            <span className="product-description">
-                                                                Orden #{item.orderId}
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                ))}
-                                            </ul>
+                                            <>
+                                                <div className="mb-2">
+                                                    <Alert>
+                                                        {completados.length} producto(s) completado(s) — retírelos de la cocina
+                                                    </Alert>
+                                                </div>
+                                                <ul className="products-list product-list-in-card">
+                                                    {completados.map((item) => (
+                                                        <li key={item.id} className="item">
+                                                            <div className="product-info">
+                                                                <span className="product-title">
+                                                                    <i className="fas fa-check-circle text-success mr-1" />
+                                                                    {item.producto?.name}
+                                                                </span>
+                                                                <span className="product-description">
+                                                                    Orden #{item.orderId}
+                                                                </span>
+                                                            </div>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </>
                                         )}
                                     </div>
                                 </div>
