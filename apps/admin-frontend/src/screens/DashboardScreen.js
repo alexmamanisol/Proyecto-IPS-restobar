@@ -314,8 +314,22 @@ const DashboardScreen = ({ history }) => {
                 </div>
             )}
 
-            <section className="content">
-                <div className="container-fluid">
+                     <section className="content">
+                     <div className="container-fluid">
+
+                        {userInfo.isAdmin && (
+                                <div className="mb-3">
+
+                                    <Link
+                                        to="/editor"
+                                        className="btn btn-warning"
+                                    >
+                                        Modo Editor
+                                    </Link>
+
+                    </div>
+                    )}
+
                     <div className="row">
                         <LoaderHandler
                             loading={loading}
