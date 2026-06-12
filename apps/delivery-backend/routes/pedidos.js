@@ -1,9 +1,17 @@
 const express = require("express");
 const router = express.Router();
+const {
+    getPedidos,
+    getPedidoById,
+    createPedido,
+    updateEstado,
+    pagarPedido,
+} = require("../controllers/pedidoController");
 
-// Ruta de prueba
-router.get("/", (req, res) => {
-    res.json({ message: "Ruta de pedidos delivery funcionando" });
-});
+router.get("/", getPedidos);
+router.get("/:id", getPedidoById);
+router.post("/", createPedido);
+router.put("/:id/estado", updateEstado);
+router.put("/:id/pagar", pagarPedido);
 
 module.exports = router;

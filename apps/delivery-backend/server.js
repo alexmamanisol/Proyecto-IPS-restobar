@@ -4,8 +4,9 @@ const morgan = require("morgan");
 const path = require("path");
 const cors = require("cors");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const { connectDB } = require("./config/db");
 
-dotenv.config({ path: path.resolve(__dirname, "../../.env") });
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 const app = express();
 app.use(cors());
@@ -16,7 +17,10 @@ if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"));
 }
 
-// Rutas delivery
+// Conectar base de datos
+connectDB();
+
+// Rutas
 const pedidoRoutes = require("./routes/pedidos");
 app.use("/api/delivery/pedidos", pedidoRoutes);
 

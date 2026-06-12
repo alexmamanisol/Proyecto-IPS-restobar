@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-const OrderViewScreen = ({ match }) => {
+const OrderViewScreen = ({ match, history }) => {
     const id = match && match.params ? match.params.id : 1;
 
+    const [order, setOrder] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
     const [modal, setModal] = useState(false);
     const [metodoPago, setMetodoPago] = useState("tarjeta");
-    const [pagado, setPagado] = useState(false);
     const [pagoExitoso, setPagoExitoso] = useState(false);
     const [errorTarjeta, setErrorTarjeta] = useState("");
     const [tarjeta, setTarjeta] = useState({
@@ -16,21 +19,21 @@ const OrderViewScreen = ({ match }) => {
         cvv: "",
     });
 
-    const order = {
-        id: parseInt(id),
-        cliente: "Juan Perez",
-        direccion: "Av. Lima 123",
-        telefono: "987654321",
-        nota: "Sin cebolla por favor",
-        isPaid: pagado,
-        total: 45.50,
-        productos: [
-            { id: 1, nombre: "Lomo Saltado", cantidad: 2, precio: 18.00 },
-            { id: 2, nombre: "Inca Kola 500ml", cantidad: 2, precio: 4.75 },
-        ],
-    };
+    useEffect(() => {
+        const fetchPedido = async () => {
+            try {
+                const { data } = await axios.get(`http://localhost:5003/api/delivery/pedidos/${id}`);
+                setOrder(data);
+                setLoading(false);
+            } catch (err) {
+                setError("Error al cargar el pedido");
+                setLoading(false);
+            }
+        };
+        fetchPedido();
+    }, [id]);
 
-    const handlePago = (e) => {
+    const handlePago = async (e) => {
         e.preventDefault();
         if (metodoPago === "tarjeta") {
             if (!tarjeta.numero || !tarjeta.nombre || !tarjeta.expiracion || !tarjeta.cvv) {
@@ -42,11 +45,24 @@ const OrderViewScreen = ({ match }) => {
                 return;
             }
         }
-        setErrorTarjeta("");
-        setPagoExitoso(true);
-        setPagado(true);
-        setModal(false);
+        try {
+            await axios.put(`http://localhost:5003/api/delivery/pedidos/${id}/pagar`, {
+                metodoPago,
+            });
+            setErrorTarjeta("");
+            setPagoExitoso(true);
+            setModal(false);
+            setOrder({ ...order, isPaid: true, estado: "Entregado" });
+        } catch (err) {
+            setErrorTarjeta("Error al procesar el pago.");
+        }
     };
+
+    if (loading) return <div className="content"><div className="container-fluid"><p>Cargando...</p></div></div>;
+    if (error) return <div className="content"><div className="container-fluid"><div className="alert alert-danger">{error}</div></div></div>;
+    if (!order) return null;
+
+    const productos = typeof order.productos === "string" ? JSON.parse(order.productos) : order.productos || [];
 
     return (
         <>
@@ -94,11 +110,11 @@ const OrderViewScreen = ({ match }) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {order.productos.map((p) => (
-                                                <tr key={p.id}>
+                                            {productos.map((p, i) => (
+                                                <tr key={i}>
                                                     <td>{p.nombre}</td>
                                                     <td><span className="badge badge-primary">{p.cantidad}</span></td>
-                                                    <td>S/ {p.precio.toFixed(2)}</td>
+                                                    <td>S/ {parseFloat(p.precio).toFixed(2)}</td>
                                                     <td><span className="badge badge-success">S/ {(p.cantidad * p.precio).toFixed(2)}</span></td>
                                                 </tr>
                                             ))}
@@ -106,7 +122,7 @@ const OrderViewScreen = ({ match }) => {
                                         <tfoot>
                                             <tr>
                                                 <td colSpan="3" className="text-right font-weight-bold">TOTAL:</td>
-                                                <td><span className="badge badge-success" style={{ fontSize: "1rem" }}>S/ {order.total.toFixed(2)}</span></td>
+                                                <td><span className="badge badge-success" style={{ fontSize: "1rem" }}>S/ {parseFloat(order.total).toFixed(2)}</span></td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -126,7 +142,7 @@ const OrderViewScreen = ({ match }) => {
                                     <p><i className="fas fa-user mr-2 text-muted" /><strong>{order.cliente}</strong></p>
                                     <p><i className="fas fa-map-marker-alt mr-2 text-muted" />{order.direccion}</p>
                                     <p><i className="fas fa-phone mr-2 text-muted" />{order.telefono}</p>
-                                    <p><i className="fas fa-sticky-note mr-2 text-muted" />{order.nota}</p>
+                                    {order.nota && <p><i className="fas fa-sticky-note mr-2 text-muted" />{order.nota}</p>}
                                     <hr />
                                     <p>Estado: <span className={`badge ${order.isPaid ? "badge-success" : "badge-warning"}`}>
                                         {order.isPaid ? "Pagado" : "Pendiente de pago"}
@@ -145,7 +161,7 @@ const OrderViewScreen = ({ match }) => {
                                             onClick={() => setModal(true)}
                                         >
                                             <i className="fas fa-credit-card mr-2" />
-                                            Pagar S/ {order.total.toFixed(2)}
+                                            Pagar S/ {parseFloat(order.total).toFixed(2)}
                                         </button>
                                     </div>
                                 </div>
@@ -162,7 +178,7 @@ const OrderViewScreen = ({ match }) => {
                             <div className="modal-header bg-success text-white">
                                 <h4 className="modal-title">
                                     <i className="fas fa-credit-card mr-2" />
-                                    Procesar Pago - S/ {order.total.toFixed(2)}
+                                    Procesar Pago - S/ {parseFloat(order.total).toFixed(2)}
                                 </h4>
                                 <button className="close text-white" onClick={() => setModal(false)}>
                                     <span>&times;</span>
@@ -193,9 +209,7 @@ const OrderViewScreen = ({ match }) => {
                                             <h5 className="card-title">Datos de la Tarjeta</h5>
                                         </div>
                                         <div className="card-body">
-                                            {errorTarjeta && (
-                                                <div className="alert alert-danger">{errorTarjeta}</div>
-                                            )}
+                                            {errorTarjeta && <div className="alert alert-danger">{errorTarjeta}</div>}
                                             <div className="form-group">
                                                 <label>Numero de tarjeta</label>
                                                 <input
@@ -252,14 +266,14 @@ const OrderViewScreen = ({ match }) => {
                                 {metodoPago === "efectivo" && (
                                     <div className="alert alert-info">
                                         <i className="fas fa-money-bill mr-2" />
-                                        El cliente pagara en efectivo. Total: <strong>S/ {order.total.toFixed(2)}</strong>
+                                        El cliente pagara en efectivo. Total: <strong>S/ {parseFloat(order.total).toFixed(2)}</strong>
                                     </div>
                                 )}
 
                                 {metodoPago === "transferencia" && (
                                     <div className="alert alert-info">
                                         <i className="fas fa-exchange-alt mr-2" />
-                                        El cliente realizara una transferencia. Total: <strong>S/ {order.total.toFixed(2)}</strong>
+                                        El cliente realizara una transferencia. Total: <strong>S/ {parseFloat(order.total).toFixed(2)}</strong>
                                     </div>
                                 )}
                             </div>

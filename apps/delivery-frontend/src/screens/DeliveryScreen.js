@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const DeliveryScreen = () => {
     const [keyword, setKeyword] = useState("");
-    const [pedidos] = useState([
-        { id: 1, cliente: "Juan Pérez", direccion: "Av. Lima 123", telefono: "987654321", estado: "Pendiente", total: 45.50 },
-        { id: 2, cliente: "María García", direccion: "Jr. Cusco 456", telefono: "912345678", estado: "En camino", total: 32.00 },
-        { id: 3, cliente: "Carlos López", direccion: "Calle Arequipa 789", telefono: "956781234", estado: "Pendiente", total: 78.90 },
-    ]);
+    const [pedidos, setPedidos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        const fetchPedidos = async () => {
+            try {
+                const { data } = await axios.get("http://localhost:5003/api/delivery/pedidos");
+                setPedidos(data);
+                setLoading(false);
+            } catch (err) {
+                setError("Error al cargar los pedidos");
+                setLoading(false);
+            }
+        };
+        fetchPedidos();
+    }, []);
 
     const pedidosFiltrados = pedidos.filter((p) =>
         p.cliente.toLowerCase().includes(keyword.toLowerCase()) ||
@@ -31,7 +44,6 @@ const DeliveryScreen = () => {
             <section className="content">
                 <div className="container-fluid">
 
-                    {/* Tarjetas resumen */}
                     <div className="row mb-3">
                         <div className="col-12 col-sm-4">
                             <div className="small-box bg-warning">
@@ -39,9 +51,7 @@ const DeliveryScreen = () => {
                                     <h3>{totalPendientes}</h3>
                                     <p>Pendientes</p>
                                 </div>
-                                <div className="icon">
-                                    <i className="fas fa-clock" />
-                                </div>
+                                <div className="icon"><i className="fas fa-clock" /></div>
                             </div>
                         </div>
                         <div className="col-12 col-sm-4">
@@ -50,9 +60,7 @@ const DeliveryScreen = () => {
                                     <h3>{totalEnCamino}</h3>
                                     <p>En Camino</p>
                                 </div>
-                                <div className="icon">
-                                    <i className="fas fa-truck" />
-                                </div>
+                                <div className="icon"><i className="fas fa-truck" /></div>
                             </div>
                         </div>
                         <div className="col-12 col-sm-4">
@@ -61,9 +69,7 @@ const DeliveryScreen = () => {
                                     <h3>{pedidos.length}</h3>
                                     <p>Total Pedidos</p>
                                 </div>
-                                <div className="icon">
-                                    <i className="fas fa-list" />
-                                </div>
+                                <div className="icon"><i className="fas fa-list" /></div>
                             </div>
                         </div>
                     </div>
@@ -80,7 +86,7 @@ const DeliveryScreen = () => {
                                         <input
                                             type="text"
                                             className="form-control form-control-sm mr-2"
-                                            placeholder="Buscar cliente o dirección..."
+                                            placeholder="Buscar cliente o direccion..."
                                             value={keyword}
                                             onChange={(e) => setKeyword(e.target.value)}
                                             style={{ width: "250px" }}
@@ -94,73 +100,66 @@ const DeliveryScreen = () => {
                                     </div>
                                 </div>
                                 <div className="card-body table-responsive p-0">
-                                    <table className="table table-hover text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Cliente</th>
-                                                <th className="d-none d-sm-table-cell">Dirección</th>
-                                                <th className="d-none d-sm-table-cell">Teléfono</th>
-                                                <th>Total</th>
-                                                <th>Estado</th>
-                                                <th>Acción</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {pedidosFiltrados.length > 0 ? (
-                                                pedidosFiltrados.map((pedido) => (
-                                                    <tr key={pedido.id}>
-                                                        <td>{pedido.id}</td>
-                                                        <td>
-                                                            <i className="fas fa-user mr-1 text-muted" />
-                                                            {pedido.cliente}
-                                                        </td>
-                                                        <td className="d-none d-sm-table-cell">
-                                                            <i className="fas fa-map-marker-alt mr-1 text-muted" />
-                                                            {pedido.direccion}
-                                                        </td>
-                                                        <td className="d-none d-sm-table-cell">
-                                                            <i className="fas fa-phone mr-1 text-muted" />
-                                                            {pedido.telefono}
-                                                        </td>
-                                                        <td>
-                                                            <span className="badge badge-primary">
-                                                                S/ {pedido.total.toFixed(2)}
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            <span className={`badge ${pedido.estado === "En camino" ? "badge-success" : "badge-warning"}`}>
-                                                                {pedido.estado === "En camino"
-                                                                    ? <><i className="fas fa-truck mr-1" />{pedido.estado}</>
-                                                                    : <><i className="fas fa-clock mr-1" />{pedido.estado}</>
-                                                                }
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            <Link
-                                                                to={`/order/${pedido.id}/view`}
-                                                                className="btn btn-info btn-sm"
-                                                            >
-                                                                <i className="fas fa-eye mr-1" />
-                                                                Ver
-                                                            </Link>
+                                    {loading ? (
+                                        <p className="text-center py-3">Cargando pedidos...</p>
+                                    ) : error ? (
+                                        <div className="alert alert-danger mx-3 mt-2">{error}</div>
+                                    ) : (
+                                        <table className="table table-hover text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Cliente</th>
+                                                    <th className="d-none d-sm-table-cell">Direccion</th>
+                                                    <th className="d-none d-sm-table-cell">Telefono</th>
+                                                    <th>Total</th>
+                                                    <th>Estado</th>
+                                                    <th>Accion</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {pedidosFiltrados.length > 0 ? (
+                                                    pedidosFiltrados.map((pedido) => (
+                                                        <tr key={pedido.id}>
+                                                            <td>{pedido.id}</td>
+                                                            <td><i className="fas fa-user mr-1 text-muted" />{pedido.cliente}</td>
+                                                            <td className="d-none d-sm-table-cell">
+                                                                <i className="fas fa-map-marker-alt mr-1 text-muted" />{pedido.direccion}
+                                                            </td>
+                                                            <td className="d-none d-sm-table-cell">
+                                                                <i className="fas fa-phone mr-1 text-muted" />{pedido.telefono}
+                                                            </td>
+                                                            <td>
+                                                                <span className="badge badge-primary">
+                                                                    S/ {parseFloat(pedido.total).toFixed(2)}
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span className={`badge ${pedido.estado === "En camino" ? "badge-success" : pedido.estado === "Entregado" ? "badge-info" : "badge-warning"}`}>
+                                                                    {pedido.estado}
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <Link to={`/order/${pedido.id}/view`} className="btn btn-info btn-sm">
+                                                                    <i className="fas fa-eye mr-1" />Ver
+                                                                </Link>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    <tr>
+                                                        <td colSpan="7" className="text-center text-muted py-3">
+                                                            No hay pedidos activos
                                                         </td>
                                                     </tr>
-                                                ))
-                                            ) : (
-                                                <tr>
-                                                    <td colSpan="7" className="text-center text-muted py-3">
-                                                        No se encontraron pedidos
-                                                    </td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </section>
         </>

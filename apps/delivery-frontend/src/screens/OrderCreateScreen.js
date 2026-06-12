@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const OrderCreateScreen = ({ history }) => {
     const [cliente, setCliente] = useState({ nombre: "", direccion: "", telefono: "" });
     const [nota, setNota] = useState("");
-    const [productos, setProductos] = useState([
+    const [productos] = useState([
         { id: 1, nombre: "Lomo Saltado", precio: 18.00 },
         { id: 2, nombre: "Inca Kola 500ml", precio: 4.75 },
         { id: 3, nombre: "Arroz con Leche", precio: 8.00 },
@@ -12,7 +13,7 @@ const OrderCreateScreen = ({ history }) => {
     ]);
     const [carrito, setCarrito] = useState([]);
     const [errors, setErrors] = useState({});
-    const [exitoso, setExitoso] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const agregarProducto = (producto) => {
         const existe = carrito.find((p) => p.id === producto.id);
@@ -31,7 +32,7 @@ const OrderCreateScreen = ({ history }) => {
 
     const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         let erroresCheck = {};
         if (!cliente.nombre) erroresCheck.nombre = "El nombre es requerido";
         if (!cliente.direccion) erroresCheck.direccion = "La direccion es requerida";
@@ -44,10 +45,22 @@ const OrderCreateScreen = ({ history }) => {
         }
 
         setErrors({});
-        setExitoso(true);
-        setTimeout(() => {
+        setLoading(true);
+
+        try {
+            await axios.post("http://localhost:5003/api/delivery/pedidos", {
+                cliente: cliente.nombre,
+                direccion: cliente.direccion,
+                telefono: cliente.telefono,
+                nota: nota,
+                total: total,
+                productos: carrito,
+            });
             history.push("/delivery");
-        }, 2000);
+        } catch (err) {
+            setErrors({ general: "Error al crear el pedido. Intenta de nuevo." });
+            setLoading(false);
+        }
     };
 
     return (
@@ -69,15 +82,11 @@ const OrderCreateScreen = ({ history }) => {
             <section className="content">
                 <div className="container-fluid">
 
-                    {exitoso && (
-                        <div className="alert alert-success">
-                            <i className="fas fa-check-circle mr-2" />
-                            Pedido creado exitosamente! Redirigiendo...
-                        </div>
+                    {errors.general && (
+                        <div className="alert alert-danger">{errors.general}</div>
                     )}
 
                     <div className="row">
-                        {/* Productos disponibles */}
                         <div className="col-12 col-md-6">
                             <div className="card">
                                 <div className="card-header">
@@ -101,10 +110,7 @@ const OrderCreateScreen = ({ history }) => {
                                                     <td>{p.nombre}</td>
                                                     <td>S/ {p.precio.toFixed(2)}</td>
                                                     <td>
-                                                        <button
-                                                            className="btn btn-success btn-sm"
-                                                            onClick={() => agregarProducto(p)}
-                                                        >
+                                                        <button className="btn btn-success btn-sm" onClick={() => agregarProducto(p)}>
                                                             <i className="fas fa-plus" />
                                                         </button>
                                                     </td>
@@ -115,7 +121,6 @@ const OrderCreateScreen = ({ history }) => {
                                 </div>
                             </div>
 
-                            {/* Carrito */}
                             <div className="card">
                                 <div className="card-header">
                                     <h3 className="card-title">
@@ -146,10 +151,7 @@ const OrderCreateScreen = ({ history }) => {
                                                         <td><span className="badge badge-primary">{p.cantidad}</span></td>
                                                         <td>S/ {(p.precio * p.cantidad).toFixed(2)}</td>
                                                         <td>
-                                                            <button
-                                                                className="btn btn-danger btn-sm"
-                                                                onClick={() => quitarProducto(p.id)}
-                                                            >
+                                                            <button className="btn btn-danger btn-sm" onClick={() => quitarProducto(p.id)}>
                                                                 <i className="fas fa-trash" />
                                                             </button>
                                                         </td>
@@ -172,7 +174,6 @@ const OrderCreateScreen = ({ history }) => {
                             </div>
                         </div>
 
-                        {/* Datos del cliente */}
                         <div className="col-12 col-md-6">
                             <div className="card">
                                 <div className="card-header">
@@ -228,9 +229,13 @@ const OrderCreateScreen = ({ history }) => {
                                     <button
                                         className="btn btn-success btn-block btn-lg"
                                         onClick={handleSubmit}
+                                        disabled={loading}
                                     >
-                                        <i className="fas fa-check mr-2" />
-                                        Crear Pedido — S/ {total.toFixed(2)}
+                                        {loading ? (
+                                            <><i className="fas fa-spinner fa-spin mr-2" />Guardando...</>
+                                        ) : (
+                                            <><i className="fas fa-check mr-2" />Crear Pedido — S/ {total.toFixed(2)}</>
+                                        )}
                                     </button>
                                 </div>
                             </div>
