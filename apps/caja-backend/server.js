@@ -34,7 +34,7 @@ app.get("/api/caja", (req, res) => {
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.CAJA_PORT || 5003;
+const PORT = process.env.CAJA_BACKEND_PORT || 5003;
 
 app.listen(PORT, () => {
     console.log(`Caja server running on port ${PORT}`);

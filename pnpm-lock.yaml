@@ -49,7 +49,7 @@ importers:
         version: 8.21.0
       react-modal:
         specifier: ^3.11.2
-        version: 3.16.3(react-dom@16.14.0)(react@16.14.0)
+        version: 3.16.3(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       sequelize:
         specifier: ^6.3.5
         version: 6.37.8(mysql2@2.3.3)(pg@8.21.0)
@@ -71,7 +71,7 @@ importers:
         version: 4.2.4
       '@testing-library/react':
         specifier: ^9.5.0
-        version: 9.5.0(@types/react@19.2.15)(react-dom@16.14.0)(react@16.14.0)
+        version: 9.5.0(@types/react@19.2.15)(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       '@testing-library/user-event':
         specifier: ^7.2.1
         version: 7.2.1(@testing-library/dom@10.4.1)
@@ -95,10 +95,10 @@ importers:
         version: 16.14.0(react@16.14.0)
       react-modal:
         specifier: ^3.14.3
-        version: 3.16.3(react-dom@16.14.0)(react@16.14.0)
+        version: 3.16.3(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       react-redux:
         specifier: ^7.2.2
-        version: 7.2.9(react-dom@16.14.0)(react@16.14.0)
+        version: 7.2.9(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       react-router-dom:
         specifier: ^5.2.0
         version: 5.3.4(react@16.14.0)
@@ -107,7 +107,7 @@ importers:
         version: 3.4.3(eslint@6.8.0)(react@16.14.0)(typescript@6.0.3)
       react-select:
         specifier: ^3.1.0
-        version: 3.2.0(react-dom@16.14.0)(react@16.14.0)
+        version: 3.2.0(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       redux:
         specifier: ^4.0.5
         version: 4.2.1
@@ -120,6 +120,80 @@ importers:
       redux-thunk:
         specifier: ^2.3.0
         version: 2.4.2(redux@4.2.1)
+
+  apps/caja-backend:
+    dependencies:
+      bcrypt:
+        specifier: ^5.0.0
+        version: 5.1.1
+      cors:
+        specifier: ^2.8.5
+        version: 2.8.6
+      dotenv:
+        specifier: ^8.2.0
+        version: 8.6.0
+      express:
+        specifier: ^4.17.1
+        version: 4.22.2(supports-color@6.1.0)
+      express-async-handler:
+        specifier: ^1.1.4
+        version: 1.2.0
+      jsonwebtoken:
+        specifier: ^8.5.1
+        version: 8.5.1
+      morgan:
+        specifier: ^1.10.0
+        version: 1.10.1
+      mysql2:
+        specifier: ^2.2.5
+        version: 2.3.3
+      sequelize:
+        specifier: ^6.3.5
+        version: 6.37.8(mysql2@2.3.3)(pg@8.21.0)
+    devDependencies:
+      nodemon:
+        specifier: ^2.0.5
+        version: 2.0.22
+
+  apps/caja-frontend:
+    dependencies:
+      axios:
+        specifier: ^0.21.0
+        version: 0.21.4
+      chart.js:
+        specifier: ^3.7.0
+        version: 3.9.1
+      react:
+        specifier: ^16.13.1
+        version: 16.14.0
+      react-chartjs-2:
+        specifier: ^4.0.0
+        version: 4.3.1(chart.js@3.9.1)(react@16.14.0)
+      react-dom:
+        specifier: ^16.14.0
+        version: 16.14.0(react@16.14.0)
+      react-redux:
+        specifier: ^7.2.2
+        version: 7.2.9(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
+      react-router-dom:
+        specifier: ^5.2.0
+        version: 5.3.4(react@16.14.0)
+      react-scripts:
+        specifier: 3.4.3
+        version: 3.4.3(eslint@6.8.0)(react@16.14.0)(typescript@6.0.3)
+      redux:
+        specifier: ^4.0.5
+        version: 4.2.1
+      redux-devtools-extension:
+        specifier: ^2.13.8
+        version: 2.13.9(redux@4.2.1)
+      redux-thunk:
+        specifier: ^2.3.0
+        version: 2.4.2(redux@4.2.1)
+    devDependencies:
+      cross-env:
+        specifier: ^10.1.0
+        version: 10.1.0
 
   apps/cocina-backend:
     dependencies:
@@ -174,7 +248,7 @@ importers:
         version: 16.14.0(react@16.14.0)
       react-redux:
         specifier: ^7.2.2
-        version: 7.2.9(react-dom@16.14.0)(react@16.14.0)
+        version: 7.2.9(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       react-router-dom:
         specifier: ^5.2.0
         version: 5.3.4(react@16.14.0)
@@ -204,7 +278,7 @@ importers:
         version: 5.3.4(react@16.14.0)
       react-select:
         specifier: ^3.1.0
-        version: 3.2.0(react-dom@16.14.0)(react@16.14.0)
+        version: 3.2.0(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
     devDependencies:
       '@babel/cli':
         specifier: ^7.24.0
@@ -1027,6 +1101,9 @@ packages:
 
   '@emotion/weak-memoize@0.2.5':
     resolution: {integrity: sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==}
+
+  '@epic-web/invariant@1.0.0':
+    resolution: {integrity: sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==}
 
   '@hapi/address@2.1.4':
     resolution: {integrity: sha512-QD1PhQk+s31P1ixsX0H0Suoupp3VMXzIVMSwobR3F3MSUO2YCV0B7xqLcUw/Bh8yuvd3LhpyqLQWTNcRmp6IdQ==}
@@ -2080,6 +2157,9 @@ packages:
   chardet@0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
 
+  chart.js@3.9.1:
+    resolution: {integrity: sha512-Ro2JbLmvg83gXF5F4sniaQ+lTbSv18E+TIf2cOeiH1Iqd2PGFOtem+DUufMZsCJwFE7ywPOpfXFBwRTGq7dh6w==}
+
   cheerio-select@2.1.0:
     resolution: {integrity: sha512-9v9kG0LvzrlcungtnJtpGNxY+fzECQKhK4EGJX2vByejiMX84MFNQw4UxPJl3bFbTMw+Dfs37XaIkCwTZfLh4g==}
 
@@ -2328,6 +2408,11 @@ packages:
 
   create-hmac@1.1.7:
     resolution: {integrity: sha512-MJG9liiZ+ogc4TzUwuvbER1JRdgvUFSB5+VR/g5h82fGaIRWMWddtKBHi7/sVhfjQZ6SehlyhvQYrcYkaUIpLg==}
+
+  cross-env@10.1.0:
+    resolution: {integrity: sha512-GsYosgnACZTADcmEyJctkJIoqAhHjttw7RsFrVoJNXbsWWqaq6Ym+7kZjq6mS45O0jij6vtiReppKQEtqWy6Dw==}
+    engines: {node: '>=20'}
+    hasBin: true
 
   cross-spawn@6.0.6:
     resolution: {integrity: sha512-VqCUuhcd1iB+dsv8gxPttb5iZh/D0iubSP21g36KXdEuf6I5JiioesUVjpCdHV9MZRUfVFlvwtIUyPfxo5trtw==}
@@ -5628,6 +5713,12 @@ packages:
     resolution: {integrity: sha512-OfBnObtnGgLGfweORmdZbyEz+3dgVePQBb3zipiaDsMHV1NpWm0rDFYIVXFV/AK+x4VIIfWHhrdMIeoTLyRr2g==}
     engines: {node: '>=6'}
 
+  react-chartjs-2@4.3.1:
+    resolution: {integrity: sha512-5i3mjP6tU7QSn0jvb8I4hudTzHJqS8l00ORJnVwI2sYu0ihpj83Lv2YzfxunfxTZkscKvZu2F2w9LkwNBhj6xA==}
+    peerDependencies:
+      chart.js: ^3.5.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+
   react-content-loader@5.1.4:
     resolution: {integrity: sha512-hTq7pZi2GKCK6a9d3u6XStozm0QGCEjw8cSqQReiWnh2up6IwCha5R5TF0o6SY5qUDpByloEZEZtnFxpJyENFw==}
     engines: {node: '>=10'}
@@ -8565,6 +8656,8 @@ snapshots:
 
   '@emotion/weak-memoize@0.2.5': {}
 
+  '@epic-web/invariant@1.0.0': {}
+
   '@hapi/address@2.1.4': {}
 
   '@hapi/bourne@1.3.2': {}
@@ -8673,7 +8766,9 @@ snapshots:
       source-map: 0.6.1
       string-length: 2.0.0
     transitivePeerDependencies:
+      - bufferutil
       - supports-color
+      - utf-8-validate
 
   '@jest/source-map@24.9.0':
     dependencies:
@@ -8885,7 +8980,7 @@ snapshots:
       pretty-format: 24.9.0
       redent: 3.0.0
 
-  '@testing-library/react@9.5.0(@types/react@19.2.15)(react-dom@16.14.0)(react@16.14.0)':
+  '@testing-library/react@9.5.0(@types/react@19.2.15)(react-dom@16.14.0(react@16.14.0))(react@16.14.0)':
     dependencies:
       '@babel/runtime': 7.29.7
       '@testing-library/dom': 6.16.0
@@ -9028,7 +9123,7 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.3
 
-  '@typescript-eslint/eslint-plugin@2.34.0(@typescript-eslint/parser@2.34.0)(eslint@6.8.0)(typescript@6.0.3)':
+  '@typescript-eslint/eslint-plugin@2.34.0(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint@6.8.0)(typescript@6.0.3)':
     dependencies:
       '@typescript-eslint/experimental-utils': 2.34.0(eslint@6.8.0)(typescript@6.0.3)
       '@typescript-eslint/parser': 2.34.0(eslint@6.8.0)(typescript@6.0.3)
@@ -9036,6 +9131,7 @@ snapshots:
       functional-red-black-tree: 1.0.1
       regexpp: 3.2.0
       tsutils: 3.21.0(typescript@6.0.3)
+    optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
       - supports-color
@@ -9058,6 +9154,7 @@ snapshots:
       '@typescript-eslint/typescript-estree': 2.34.0(typescript@6.0.3)
       eslint: 6.8.0
       eslint-visitor-keys: 1.3.0
+    optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
       - supports-color
@@ -9071,6 +9168,7 @@ snapshots:
       lodash: 4.18.1
       semver: 7.8.1
       tsutils: 3.21.0(typescript@6.0.3)
+    optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
       - supports-color
@@ -9461,7 +9559,7 @@ snapshots:
 
   axios@0.21.4:
     dependencies:
-      follow-redirects: 1.16.0(debug@4.4.3)
+      follow-redirects: 1.16.0(debug@4.4.3(supports-color@6.1.0))
     transitivePeerDependencies:
       - debug
 
@@ -9980,6 +10078,8 @@ snapshots:
 
   chardet@0.7.0: {}
 
+  chart.js@3.9.1: {}
+
   cheerio-select@2.1.0:
     dependencies:
       boolbase: 1.0.0
@@ -10282,6 +10382,11 @@ snapshots:
       safe-buffer: 5.2.1
       sha.js: 2.4.12
 
+  cross-env@10.1.0:
+    dependencies:
+      '@epic-web/invariant': 1.0.0
+      cross-spawn: 7.0.6
+
   cross-spawn@6.0.6:
     dependencies:
       nice-try: 1.0.5
@@ -10511,21 +10616,25 @@ snapshots:
   debug@2.6.9(supports-color@6.1.0):
     dependencies:
       ms: 2.0.0
+    optionalDependencies:
       supports-color: 6.1.0
 
   debug@3.2.7(supports-color@5.5.0):
     dependencies:
       ms: 2.1.3
+    optionalDependencies:
       supports-color: 5.5.0
 
   debug@3.2.7(supports-color@6.1.0):
     dependencies:
       ms: 2.1.3
+    optionalDependencies:
       supports-color: 6.1.0
 
   debug@4.4.3(supports-color@6.1.0):
     dependencies:
       ms: 2.1.3
+    optionalDependencies:
       supports-color: 6.1.0
 
   decamelize@1.2.0: {}
@@ -10979,23 +11088,24 @@ snapshots:
     optionalDependencies:
       source-map: 0.6.1
 
-  eslint-config-react-app@5.2.1(@typescript-eslint/eslint-plugin@2.34.0)(@typescript-eslint/parser@2.34.0)(babel-eslint@10.1.0)(eslint-plugin-flowtype@4.6.0)(eslint-plugin-import@2.20.1)(eslint-plugin-jsx-a11y@6.2.3)(eslint-plugin-react-hooks@1.7.0)(eslint-plugin-react@7.19.0)(eslint@6.8.0)(typescript@6.0.3):
+  eslint-config-react-app@5.2.1(@typescript-eslint/eslint-plugin@2.34.0(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint@6.8.0)(typescript@6.0.3))(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(babel-eslint@10.1.0(eslint@6.8.0))(eslint-plugin-flowtype@4.6.0(eslint@6.8.0))(eslint-plugin-import@2.20.1(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint@6.8.0))(eslint-plugin-jsx-a11y@6.2.3(eslint@6.8.0))(eslint-plugin-react-hooks@1.7.0(eslint@6.8.0))(eslint-plugin-react@7.19.0(eslint@6.8.0))(eslint@6.8.0)(typescript@6.0.3):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 2.34.0(@typescript-eslint/parser@2.34.0)(eslint@6.8.0)(typescript@6.0.3)
+      '@typescript-eslint/eslint-plugin': 2.34.0(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint@6.8.0)(typescript@6.0.3)
       '@typescript-eslint/parser': 2.34.0(eslint@6.8.0)(typescript@6.0.3)
       babel-eslint: 10.1.0(eslint@6.8.0)
       confusing-browser-globals: 1.0.11
       eslint: 6.8.0
       eslint-plugin-flowtype: 4.6.0(eslint@6.8.0)
-      eslint-plugin-import: 2.20.1(@typescript-eslint/parser@2.34.0)(eslint@6.8.0)
+      eslint-plugin-import: 2.20.1(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint@6.8.0)
       eslint-plugin-jsx-a11y: 6.2.3(eslint@6.8.0)
       eslint-plugin-react: 7.19.0(eslint@6.8.0)
       eslint-plugin-react-hooks: 1.7.0(eslint@6.8.0)
+    optionalDependencies:
       typescript: 6.0.3
 
   eslint-import-resolver-node@0.3.10:
     dependencies:
-      debug: 3.2.7(supports-color@6.1.0)
+      debug: 3.2.7(supports-color@5.5.0)
       is-core-module: 2.16.2
       resolve: 2.0.0-next.7
     transitivePeerDependencies:
@@ -11011,10 +11121,11 @@ snapshots:
       schema-utils: 2.7.1
       webpack: 4.42.0
 
-  eslint-module-utils@2.12.1(@typescript-eslint/parser@2.34.0)(eslint-import-resolver-node@0.3.10)(eslint@6.8.0):
+  eslint-module-utils@2.12.1(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint-import-resolver-node@0.3.10)(eslint@6.8.0):
     dependencies:
+      debug: 3.2.7(supports-color@5.5.0)
+    optionalDependencies:
       '@typescript-eslint/parser': 2.34.0(eslint@6.8.0)(typescript@6.0.3)
-      debug: 3.2.7(supports-color@6.1.0)
       eslint: 6.8.0
       eslint-import-resolver-node: 0.3.10
     transitivePeerDependencies:
@@ -11025,9 +11136,8 @@ snapshots:
       eslint: 6.8.0
       lodash: 4.18.1
 
-  eslint-plugin-import@2.20.1(@typescript-eslint/parser@2.34.0)(eslint@6.8.0):
+  eslint-plugin-import@2.20.1(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint@6.8.0):
     dependencies:
-      '@typescript-eslint/parser': 2.34.0(eslint@6.8.0)(typescript@6.0.3)
       array-includes: 3.1.9
       array.prototype.flat: 1.3.3
       contains-path: 0.1.0
@@ -11035,12 +11145,14 @@ snapshots:
       doctrine: 1.5.0
       eslint: 6.8.0
       eslint-import-resolver-node: 0.3.10
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@2.34.0)(eslint-import-resolver-node@0.3.10)(eslint@6.8.0)
+      eslint-module-utils: 2.12.1(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint-import-resolver-node@0.3.10)(eslint@6.8.0)
       has: 1.0.4
       minimatch: 3.1.5
       object.values: 1.2.1
       read-pkg-up: 2.0.0
       resolve: 1.15.0
+    optionalDependencies:
+      '@typescript-eslint/parser': 2.34.0(eslint@6.8.0)(typescript@6.0.3)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -11075,7 +11187,7 @@ snapshots:
       object.values: 1.2.1
       prop-types: 15.8.1
       resolve: 1.22.12
-      semver: 6.3.0
+      semver: 6.3.1
       string.prototype.matchall: 4.0.12
       xregexp: 4.4.1
 
@@ -11432,8 +11544,8 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 2.3.8
 
-  follow-redirects@1.16.0(debug@4.4.3):
-    dependencies:
+  follow-redirects@1.16.0(debug@4.4.3(supports-color@6.1.0)):
+    optionalDependencies:
       debug: 4.4.3(supports-color@6.1.0)
 
   for-each@0.3.5:
@@ -11460,7 +11572,6 @@ snapshots:
       babel-code-frame: 6.26.0
       chalk: 2.4.2
       chokidar: 3.6.0
-      eslint: 6.8.0
       micromatch: 3.1.10(supports-color@6.1.0)
       minimatch: 3.1.5
       semver: 5.7.2
@@ -11468,6 +11579,8 @@ snapshots:
       typescript: 6.0.3
       webpack: 4.42.0
       worker-rpc: 0.1.1
+    optionalDependencies:
+      eslint: 6.8.0
     transitivePeerDependencies:
       - supports-color
 
@@ -11876,9 +11989,9 @@ snapshots:
 
   http-parser-js@0.5.10: {}
 
-  http-proxy-middleware@0.19.1(debug@4.4.3)(supports-color@6.1.0):
+  http-proxy-middleware@0.19.1(debug@4.4.3(supports-color@6.1.0))(supports-color@6.1.0):
     dependencies:
-      http-proxy: 1.18.1(debug@4.4.3)
+      http-proxy: 1.18.1(debug@4.4.3(supports-color@6.1.0))
       is-glob: 4.0.3
       lodash: 4.18.1
       micromatch: 3.1.10(supports-color@6.1.0)
@@ -11886,10 +11999,10 @@ snapshots:
       - debug
       - supports-color
 
-  http-proxy@1.18.1(debug@4.4.3):
+  http-proxy@1.18.1(debug@4.4.3(supports-color@6.1.0)):
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.16.0(debug@4.4.3)
+      follow-redirects: 1.16.0(debug@4.4.3(supports-color@6.1.0))
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -12290,7 +12403,7 @@ snapshots:
       '@babel/traverse': 7.29.7
       '@babel/types': 7.29.7
       istanbul-lib-coverage: 2.0.5
-      semver: 6.3.0
+      semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
 
@@ -12466,9 +12579,7 @@ snapshots:
       pretty-format: 24.9.0
       throat: 4.1.0
     transitivePeerDependencies:
-      - bufferutil
       - supports-color
-      - utf-8-validate
 
   jest-leak-detector@24.9.0:
     dependencies:
@@ -12500,7 +12611,7 @@ snapshots:
       '@jest/types': 24.9.0
 
   jest-pnp-resolver@1.2.3(jest-resolve@24.9.0):
-    dependencies:
+    optionalDependencies:
       jest-resolve: 24.9.0
 
   jest-regex-util@24.9.0: {}
@@ -12593,7 +12704,7 @@ snapshots:
       mkdirp: 0.5.6
       natural-compare: 1.4.0
       pretty-format: 24.9.0
-      semver: 6.3.0
+      semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
 
@@ -14273,7 +14384,7 @@ snapshots:
   progress@2.0.3: {}
 
   promise-inflight@1.0.1(bluebird@3.7.2):
-    dependencies:
+    optionalDependencies:
       bluebird: 3.7.2
 
   promise@8.3.0:
@@ -14390,6 +14501,11 @@ snapshots:
       regenerator-runtime: 0.13.11
       whatwg-fetch: 3.6.20
 
+  react-chartjs-2@4.3.1(chart.js@3.9.1)(react@16.14.0):
+    dependencies:
+      chart.js: 3.9.1
+      react: 16.14.0
+
   react-content-loader@5.1.4(react@16.14.0):
     dependencies:
       react: 16.14.0
@@ -14420,8 +14536,9 @@ snapshots:
       shell-quote: 1.7.2
       strip-ansi: 6.0.0
       text-table: 0.2.0
-      typescript: 6.0.3
       webpack: 4.42.0
+    optionalDependencies:
+      typescript: 6.0.3
     transitivePeerDependencies:
       - eslint
       - supports-color
@@ -14448,7 +14565,7 @@ snapshots:
 
   react-lifecycles-compat@3.0.4: {}
 
-  react-modal@3.16.3(react-dom@16.14.0)(react@16.14.0):
+  react-modal@3.16.3(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
     dependencies:
       exenv: 1.2.2
       prop-types: 15.8.1
@@ -14457,7 +14574,7 @@ snapshots:
       react-lifecycles-compat: 3.0.4
       warning: 4.0.3
 
-  react-redux@7.2.9(react-dom@16.14.0)(react@16.14.0):
+  react-redux@7.2.9(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
     dependencies:
       '@babel/runtime': 7.29.7
       '@types/react-redux': 7.1.34
@@ -14465,8 +14582,9 @@ snapshots:
       loose-envify: 1.4.0
       prop-types: 15.8.1
       react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
       react-is: 17.0.2
+    optionalDependencies:
+      react-dom: 16.14.0(react@16.14.0)
 
   react-router-dom@5.3.4(react@16.14.0):
     dependencies:
@@ -14496,7 +14614,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.9.0
       '@svgr/webpack': 4.3.3
-      '@typescript-eslint/eslint-plugin': 2.34.0(@typescript-eslint/parser@2.34.0)(eslint@6.8.0)(typescript@6.0.3)
+      '@typescript-eslint/eslint-plugin': 2.34.0(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint@6.8.0)(typescript@6.0.3)
       '@typescript-eslint/parser': 2.34.0(eslint@6.8.0)(typescript@6.0.3)
       babel-eslint: 10.1.0(eslint@6.8.0)
       babel-jest: 24.9.0(@babel/core@7.9.0)
@@ -14509,10 +14627,10 @@ snapshots:
       dotenv: 8.2.0
       dotenv-expand: 5.1.0
       eslint: 6.8.0
-      eslint-config-react-app: 5.2.1(@typescript-eslint/eslint-plugin@2.34.0)(@typescript-eslint/parser@2.34.0)(babel-eslint@10.1.0)(eslint-plugin-flowtype@4.6.0)(eslint-plugin-import@2.20.1)(eslint-plugin-jsx-a11y@6.2.3)(eslint-plugin-react-hooks@1.7.0)(eslint-plugin-react@7.19.0)(eslint@6.8.0)(typescript@6.0.3)
+      eslint-config-react-app: 5.2.1(@typescript-eslint/eslint-plugin@2.34.0(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint@6.8.0)(typescript@6.0.3))(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(babel-eslint@10.1.0(eslint@6.8.0))(eslint-plugin-flowtype@4.6.0(eslint@6.8.0))(eslint-plugin-import@2.20.1(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint@6.8.0))(eslint-plugin-jsx-a11y@6.2.3(eslint@6.8.0))(eslint-plugin-react-hooks@1.7.0(eslint@6.8.0))(eslint-plugin-react@7.19.0(eslint@6.8.0))(eslint@6.8.0)(typescript@6.0.3)
       eslint-loader: 3.0.3(eslint@6.8.0)(webpack@4.42.0)
       eslint-plugin-flowtype: 4.6.0(eslint@6.8.0)
-      eslint-plugin-import: 2.20.1(@typescript-eslint/parser@2.34.0)(eslint@6.8.0)
+      eslint-plugin-import: 2.20.1(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint@6.8.0)
       eslint-plugin-jsx-a11y: 6.2.3(eslint@6.8.0)
       eslint-plugin-react: 7.19.0(eslint@6.8.0)
       eslint-plugin-react-hooks: 1.7.0(eslint@6.8.0)
@@ -14542,14 +14660,14 @@ snapshots:
       style-loader: 0.23.1
       terser-webpack-plugin: 2.3.8(webpack@4.42.0)
       ts-pnp: 1.1.6(typescript@6.0.3)
-      typescript: 6.0.3
-      url-loader: 2.3.0(file-loader@4.3.0)(webpack@4.42.0)
+      url-loader: 2.3.0(file-loader@4.3.0(webpack@4.42.0))(webpack@4.42.0)
       webpack: 4.42.0
       webpack-dev-server: 3.11.0(webpack@4.42.0)
       webpack-manifest-plugin: 2.2.0(webpack@4.42.0)
       workbox-webpack-plugin: 4.3.1(webpack@4.42.0)
     optionalDependencies:
       fsevents: 2.1.2
+      typescript: 6.0.3
     transitivePeerDependencies:
       - bluebird
       - bufferutil
@@ -14564,7 +14682,7 @@ snapshots:
       - webpack-cli
       - webpack-command
 
-  react-select@3.2.0(react-dom@16.14.0)(react@16.14.0):
+  react-select@3.2.0(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
     dependencies:
       '@babel/runtime': 7.29.7
       '@emotion/cache': 10.0.29
@@ -14575,11 +14693,11 @@ snapshots:
       react: 16.14.0
       react-dom: 16.14.0(react@16.14.0)
       react-input-autosize: 3.0.0(react@16.14.0)
-      react-transition-group: 4.4.5(react-dom@16.14.0)(react@16.14.0)
+      react-transition-group: 4.4.5(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
     transitivePeerDependencies:
       - supports-color
 
-  react-transition-group@4.4.5(react-dom@16.14.0)(react@16.14.0):
+  react-transition-group@4.4.5(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
     dependencies:
       '@babel/runtime': 7.29.7
       dom-helpers: 5.2.1
@@ -14948,7 +15066,7 @@ snapshots:
       loader-utils: 1.4.2
       neo-async: 2.6.2
       schema-utils: 2.7.1
-      semver: 6.3.0
+      semver: 6.3.1
       webpack: 4.42.0
 
   sax@1.2.4: {}
@@ -15034,8 +15152,6 @@ snapshots:
       lodash: 4.18.1
       moment: 2.30.1
       moment-timezone: 0.5.48
-      mysql2: 2.3.3
-      pg: 8.21.0
       pg-connection-string: 2.13.0
       retry-as-promised: 7.1.1
       semver: 7.8.1
@@ -15044,6 +15160,9 @@ snapshots:
       uuid: 8.3.2
       validator: 13.15.35
       wkx: 0.5.0
+    optionalDependencies:
+      mysql2: 2.3.3
+      pg: 8.21.0
     transitivePeerDependencies:
       - supports-color
 
@@ -15675,7 +15794,7 @@ snapshots:
       punycode: 2.3.1
 
   ts-pnp@1.1.6(typescript@6.0.3):
-    dependencies:
+    optionalDependencies:
       typescript: 6.0.3
 
   tslib@1.14.1: {}
@@ -15830,13 +15949,14 @@ snapshots:
 
   urix@0.1.0: {}
 
-  url-loader@2.3.0(file-loader@4.3.0)(webpack@4.42.0):
+  url-loader@2.3.0(file-loader@4.3.0(webpack@4.42.0))(webpack@4.42.0):
     dependencies:
-      file-loader: 4.3.0(webpack@4.42.0)
       loader-utils: 1.4.2
       mime: 2.6.0
       schema-utils: 2.7.1
       webpack: 4.42.0
+    optionalDependencies:
+      file-loader: 4.3.0(webpack@4.42.0)
 
   url-parse@1.5.10:
     dependencies:
@@ -15987,7 +16107,7 @@ snapshots:
       del: 4.1.1
       express: 4.22.2(supports-color@6.1.0)
       html-entities: 1.4.0
-      http-proxy-middleware: 0.19.1(debug@4.4.3)(supports-color@6.1.0)
+      http-proxy-middleware: 0.19.1(debug@4.4.3(supports-color@6.1.0))(supports-color@6.1.0)
       import-local: 2.0.0
       internal-ip: 4.3.0
       ip: 1.1.9
@@ -15999,7 +16119,7 @@ snapshots:
       portfinder: 1.0.38(supports-color@6.1.0)
       schema-utils: 1.0.0
       selfsigned: 1.10.14
-      semver: 6.3.0
+      semver: 6.3.1
       serve-index: 1.9.2(supports-color@6.1.0)
       sockjs: 0.3.20
       sockjs-client: 1.4.0(supports-color@6.1.0)
