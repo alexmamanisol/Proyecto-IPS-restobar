@@ -16,6 +16,10 @@
     "db:seed": {
       "dependsOn": ["db:migrate"],
       "cache": false
+    },
+    "db:generate": {
+      "dependsOn": ["db:generate"],
+      "cache": false
     }
   }
 }

@@ -23,6 +23,11 @@ module.exports = {
                     type: Sequelize.STRING,
                     allowNull: false,
                 },
+                categoria: {
+                    type: Sequelize.ENUM("A", "B", "C"),
+                    allowNull: false,
+                    defaultValue: "C",
+                },
                 cantidad: {
                     type: Sequelize.FLOAT,
                     allowNull: false,
