@@ -5,6 +5,8 @@ import Header from "./components/Header";
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
 
+import EditorScreen from "./screens/EditorScreen";
+
 /* SCREENS */
 import OrderScreen from "./screens/order/OrderScreen";
 import DeliveryScreen from "./screens/order/DeliveryScreen";
@@ -111,6 +113,11 @@ const Main = () => {
                     <PrivateRoute
                         path="/not-authorized"
                         component={NotAuthorizedScreen}
+                    />
+
+                    <AdminRoute
+                        path="/editor"
+                        component={EditorScreen}
                     />
                     <PrivateRoute path="/" component={DashboardScreen} />
                     <Route component={NotFoundScreen} />

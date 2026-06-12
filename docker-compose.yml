@@ -28,7 +28,7 @@ services:
             - mysql
         build:
             dockerfile: Dockerfile.dev
-            context: ./apps/admin/backend
+            context: ./apps/admin-backend
         volumes:
             - /app/node_modules
             - ./backend:/app
@@ -48,7 +48,7 @@ services:
         stdin_open: true
         build:
             dockerfile: Dockerfile.dev
-            context: ./apps/admin/frontend
+            context: ./apps/admin-frontend
         volumes:
             - /app/node_modules
             - ./frontend:/app
