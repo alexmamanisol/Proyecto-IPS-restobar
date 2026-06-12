@@ -55,6 +55,9 @@ exports.login = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
+
+            role: user.role,
+            
             image: user.image,
             token: generateToken(user.id),
         });

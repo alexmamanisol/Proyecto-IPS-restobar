@@ -301,6 +301,19 @@ const DashboardScreen = ({ history }) => {
         <>
             <HeaderContent name={"Dashboard"} />
 
+            {userInfo.isAdmin && (
+                <div className="mb-3">
+                    <Link
+                        to="/editor"
+                        className="btn btn-danger"
+                    >
+                        <i className="fas fa-user-shield"></i>
+                        {" "}
+                        Modo Editor
+                    </Link>
+                </div>
+            )}
+
             <section className="content">
                 <div className="container-fluid">
                     <div className="row">
