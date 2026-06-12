@@ -7,6 +7,7 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
+    "@restobar/database": "workspace:*",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

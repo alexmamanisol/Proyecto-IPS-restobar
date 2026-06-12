@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@restobar/ui": "workspace:*",
     "axios": "^0.21.0",
     "chart.js": "^3.7.0",
     "react": "^16.13.1",
@@ -19,7 +20,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider PORT=3002 react-scripts start"
+    "dev": "cross-env PORT=3002 react-scripts start"
   },
   "proxy": "http://localhost:5002",
   "eslintConfig": {

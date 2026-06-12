@@ -123,6 +123,9 @@ importers:
 
   apps/caja-backend:
     dependencies:
+      '@restobar/database':
+        specifier: workspace:*
+        version: link:../../packages/database
       bcrypt:
         specifier: ^5.0.0
         version: 5.1.1
@@ -157,6 +160,9 @@ importers:
 
   apps/caja-frontend:
     dependencies:
+      '@restobar/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       axios:
         specifier: ^0.21.0
         version: 0.21.4
@@ -267,24 +273,19 @@ importers:
       redux-thunk:
         specifier: ^2.3.0
         version: 2.4.2(redux@4.2.1)
+    devDependencies:
+      cross-env:
+        specifier: ^10.1.0
+        version: 10.1.0
 
-<<<<<<< HEAD
-  packages/database:
-=======
   apps/delivery-backend:
->>>>>>> master
     dependencies:
+      '@restobar/database':
+        specifier: workspace:*
+        version: link:../../packages/database
       bcrypt:
         specifier: ^5.0.0
         version: 5.1.1
-<<<<<<< HEAD
-      dotenv:
-        specifier: ^8.2.0
-        version: 8.6.0
-      mysql2:
-        specifier: ^2.2.5
-        version: 2.3.3
-=======
       cors:
         specifier: ^2.8.5
         version: 2.8.6
@@ -312,16 +313,10 @@ importers:
       pg:
         specifier: ^8.21.0
         version: 8.21.0
->>>>>>> master
       sequelize:
         specifier: ^6.3.5
         version: 6.37.8(mysql2@2.3.3)(pg@8.21.0)
     devDependencies:
-<<<<<<< HEAD
-      sequelize-cli:
-        specifier: ^6.2.0
-        version: 6.6.5
-=======
       nodemon:
         specifier: ^2.0.5
         version: 2.0.22
@@ -348,7 +343,7 @@ importers:
         version: 5.3.4(react@16.14.0)
       react-scripts:
         specifier: 3.4.3
-        version: 3.4.3(eslint@6.8.0)(react@16.14.0)(typescript@3.9.10)
+        version: 3.4.3(eslint@6.8.0)(react@16.14.0)(typescript@6.0.3)
       redux:
         specifier: ^4.0.5
         version: 4.2.1
@@ -358,7 +353,29 @@ importers:
       redux-thunk:
         specifier: ^2.3.0
         version: 2.4.2(redux@4.2.1)
->>>>>>> master
+    devDependencies:
+      cross-env:
+        specifier: ^10.1.0
+        version: 10.1.0
+
+  packages/database:
+    dependencies:
+      bcrypt:
+        specifier: ^5.0.0
+        version: 5.1.1
+      dotenv:
+        specifier: ^8.2.0
+        version: 8.6.0
+      mysql2:
+        specifier: ^2.2.5
+        version: 2.3.3
+      sequelize:
+        specifier: ^6.3.5
+        version: 6.37.8(mysql2@2.3.3)(pg@8.21.0)
+    devDependencies:
+      sequelize-cli:
+        specifier: ^6.2.0
+        version: 6.6.5
 
   packages/ui:
     dependencies:
@@ -5758,7 +5775,6 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
-
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@6.15.2:
@@ -7432,7 +7448,7 @@ snapshots:
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       lodash: 4.18.1
-      resolve: 1.15.0
+      resolve: 1.22.12
       semver: 5.7.2
       source-map: 0.5.7
     transitivePeerDependencies:
@@ -9674,7 +9690,7 @@ snapshots:
       '@babel/types': 7.29.7
       eslint: 6.8.0
       eslint-visitor-keys: 1.3.0
-      resolve: 1.15.0
+      resolve: 1.22.12
     transitivePeerDependencies:
       - supports-color
 
@@ -11200,7 +11216,7 @@ snapshots:
 
   eslint-import-resolver-node@0.3.10:
     dependencies:
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
       is-core-module: 2.16.2
       resolve: 2.0.0-next.7
     transitivePeerDependencies:
@@ -11218,7 +11234,7 @@ snapshots:
 
   eslint-module-utils@2.12.1(@typescript-eslint/parser@2.34.0(eslint@6.8.0)(typescript@6.0.3))(eslint-import-resolver-node@0.3.10)(eslint@6.8.0):
     dependencies:
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 3.2.7(supports-color@6.1.0)
     optionalDependencies:
       '@typescript-eslint/parser': 2.34.0(eslint@6.8.0)(typescript@6.0.3)
       eslint: 6.8.0
@@ -11245,7 +11261,7 @@ snapshots:
       minimatch: 3.1.5
       object.values: 1.2.1
       read-pkg-up: 2.0.0
-      resolve: 1.15.0
+      resolve: 1.22.12
     optionalDependencies:
       '@typescript-eslint/parser': 2.34.0(eslint@6.8.0)(typescript@6.0.3)
     transitivePeerDependencies:
