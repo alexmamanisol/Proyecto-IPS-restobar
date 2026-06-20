@@ -23,11 +23,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Cache turbo ~/.cache
         uses: actions/cache@v4
@@ -35,12 +40,12 @@ jobs:
           path: |
             ~/.cache/turbo
             node_modules
-          key: ${{ runner.os }}-turbo-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-turbo-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-turbo-
 
       - name: Install root deps
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build changed packages with turbo
         run: npx turbo run build --filter=... --no-deps
@@ -70,14 +75,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 14.x
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install root deps
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Download frontend build
         uses: actions/download-artifact@v4
@@ -86,7 +96,7 @@ jobs:
           path: apps/web/.next
 
       - name: Install Vercel CLI
-        run: npm i -g vercel@34
+        run: pnpm add -g vercel@34
 
       - name: Deploy to Vercel
         env:

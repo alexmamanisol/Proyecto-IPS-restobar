@@ -3,6 +3,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "start": "turbo run start",
     "lint": "turbo run lint",
     "db:migrate": "pnpm --filter @restobar/database db:migrate",
     "db:seed": "pnpm --filter @restobar/database db:seed"
@@ -10,5 +11,9 @@
   "devDependencies": {
     "turbo": "latest"
   },
-  "packageManager": "pnpm@9.0.0"
+  "packageManager": "pnpm@9.0.0",
+  "dependencies": {
+    "@libsql/client": "^0.17.4",
+    "@tursodatabase/database": "^0.6.1"
+  }
 }

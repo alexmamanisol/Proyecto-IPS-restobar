@@ -17,7 +17,7 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "serve -s build -l 3002",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "dev": "cross-env PORT=3002 react-scripts start"
@@ -39,6 +39,7 @@
     ]
   },
   "devDependencies": {
-    "cross-env": "^10.1.0"
+    "cross-env": "^10.1.0",
+    "serve": "^14.2.0"
   }
 }
