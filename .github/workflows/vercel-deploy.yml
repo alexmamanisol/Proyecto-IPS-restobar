@@ -48,7 +48,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build changed packages with turbo
-        run: npx turbo run build --filter=... --no-deps
+        run: npx turbo run build --filter=...
         # Remove --filter or adjust to your needs; turbo will run affected builds by default:
         # npx turbo run build
 
@@ -63,7 +63,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-build
-          path: apps/web/.next # o apps/web/out or apps/web/build según tu framework
+          path: |
+          apps/admin-frontend/dist # o apps/web/out or apps/web/build según tu framework
+          apps/admin-frontend/.next
+          apps/admin-frontend/out
 
   vercel-deploy:
     name: Deploy to Vercel
