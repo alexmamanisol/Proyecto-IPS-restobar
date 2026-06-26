@@ -11,10 +11,10 @@ import axios from 'axios';
 
 function App() {
   const [mesas, setMesas] = useState([]);
-
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL || `${process.env.HOST || "http://localhost"}:${process.env.RESTO_BACKEND_PORT || 5000}`;
   // Ejemplo de enlace con tu API del backend de Restobar
   useEffect(() => {
-    axios.get('http://localhost:5000/api/mesas')
+    axios.post('/api/mesas')
       .then(response => setMesas(response.data))
       .catch(error => console.error("Error cargando mesas:", error));
   }, []);
